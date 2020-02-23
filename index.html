@@ -16,43 +16,77 @@
             --purple: #bd93f9;
         }
 
+        *{
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
         body {
             background-color: var(--gray);
         }
 
         #content {
+            text-align: center;
+        }
+
+        #content-game {
             background-color: var(--dark-gray);
             border: 1px solid var(--purple);
         }
+
+        #info-panel{
+            width: 480px;
+            background-color: var(--dark-gray);
+            border: 1px solid var(--purple);
+            margin: 0 auto;
+            padding: 0 10px;
+            color: var(--cyan)
+        }
+
+        #info-panel p{
+            font-size: 0.8em;
+            text-align: left;
+        }
+
     </style>
 </head>
 
 <body>
-    <canvas id='content' width="480" height="270">
+    <div id='content'>
+        <canvas id='content-game' width="480" height="270">
 
-    </canvas>
+        </canvas>
+        <div id='info-panel'>
+            <p>Player Position: <span id='player-position'>(0,0)</span></p>
+        </div>
+    </div>
+
     <script>
 
-        let state = {
-            player : null
-        }
+        let state = {}
 
         const game = {
-            canvas: document.getElementById('content'),
+            canvas: document.getElementById('content-game'),
+            infoPanel:{
+                playerPosition: document.getElementById('player-position')
+            },
             start: function () {
                 this.context = this.canvas.getContext('2d')
                 this.interval = setInterval(updateGame, 20)
 
-                window.addEventListener('keydown', function(e){
+                window.addEventListener('keydown', function (e) {
                     state.player.key = e.keyCode
                 })
 
-                window.addEventListener('keyup', function(){
+                window.addEventListener('keyup', function () {
                     state.player.key = false
                 })
             },
-            clear: function(){
+            clear: function () {
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            },
+            showDebugPanel: function(){
+                this.infoPanel.playerPosition.innerHTML = `(${state.player.x},${state.player.y})`
             }
         }
 
@@ -61,14 +95,15 @@
             state.player = new Component(30, 30, '#8be9fd', 10, 10)
         }
 
-        function updateGame(){
+        function updateGame() {
             game.clear()
             state.player.update()
             state.player.draw()
+            game.showDebugPanel()
         }
 
-    
-        function Component(width, height, color, x, y){
+
+        function Component(width, height, color, x, y) {
             this.width = width
             this.height = height
             this.color = color
@@ -79,32 +114,32 @@
             this.key = false
             this.steps = 2
 
-            this.checkInput = function(){
-                if(this.key === 37){
+            this.checkInput = function () {
+                if (this.key === 37) {
                     this.speedX = -this.steps
                     this.speedY = 0
-                } 
-                if(this.key === 39){
+                }
+                if (this.key === 39) {
                     this.speedX = this.steps
                     this.speedY = 0
-                }   
-                if(this.key === 38){
+                }
+                if (this.key === 38) {
                     this.speedY = -this.steps
                     this.speedX = 0
                 }
-                if(this.key === 40){
+                if (this.key === 40) {
                     this.speedY = this.steps
                     this.speedX = 0
-                }     
+                }
             }
 
-            this.update = function(){
+            this.update = function () {
                 this.checkInput()
                 this.x += this.speedX
                 this.y += this.speedY
             }
 
-            this.draw = function(){
+            this.draw = function () {
                 game.context.fillStyle = color
                 game.context.fillRect(this.x, this.y, this.width, this.height)
             }
