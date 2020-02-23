@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bot JS</title>
+    <style>
+        :root {
+            --dark-gray: #282a36;
+            --gray: #44475a;
+            --green: #50fa7b;
+            --cyan: #8be9fd;
+            --red: #ff5555;
+            --pink: #ff79c6;
+            --purple: #bd93f9;
+        }
+
+        body {
+            background-color: var(--gray);
+        }
+
+        #content {
+            background-color: var(--dark-gray);
+            border: 1px solid var(--purple);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id='content' width="480" height="270">
+
+    </canvas>
+    <script>
+
+        let state = {
+            player : null
+        }
+
+        const game = {
+            canvas: document.getElementById('content'),
+            start: function () {
+                this.context = this.canvas.getContext('2d')
+                this.interval = setInterval(updateGame, 20)
+
+                window.addEventListener('keydown', function(e){
+                    state.player.key = e.keyCode
+                })
+
+                window.addEventListener('keyup', function(){
+                    state.player.key = false
+                })
+            },
+            clear: function(){
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            }
+        }
+
+        function startGame() {
+            game.start()
+            state.player = new Component(30, 30, '#8be9fd', 10, 10)
+        }
+
+        function updateGame(){
+            game.clear()
+            state.player.update()
+            state.player.draw()
+        }
+
+    
+        function Component(width, height, color, x, y){
+            this.width = width
+            this.height = height
+            this.color = color
+            this.x = x
+            this.y = y
+            this.speedX = 0
+            this.speedY = 0
+            this.key = false
+            this.steps = 2
+
+            this.checkInput = function(){
+                if(this.key === 37){
+                    this.speedX = -this.steps
+                    this.speedY = 0
+                } 
+                if(this.key === 39){
+                    this.speedX = this.steps
+                    this.speedY = 0
+                }   
+                if(this.key === 38){
+                    this.speedY = -this.steps
+                    this.speedX = 0
+                }
+                if(this.key === 40){
+                    this.speedY = this.steps
+                    this.speedX = 0
+                }     
+            }
+
+            this.update = function(){
+                this.checkInput()
+                this.x += this.speedX
+                this.y += this.speedY
+            }
+
+            this.draw = function(){
+                game.context.fillStyle = color
+                game.context.fillRect(this.x, this.y, this.width, this.height)
+            }
+        }
+
+        startGame()
+
+    </script>
+</body>
+
+</html>
