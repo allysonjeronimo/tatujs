@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Bot JS</title>
+    <script src="https://kit.fontawesome.com/e850e67dac.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --dark-gray: #282a36;
@@ -16,9 +18,9 @@
             --purple: #bd93f9;
         }
 
-        *{
+        * {
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: 'Ubuntu', sans-serif;
         }
 
         body {
@@ -34,7 +36,7 @@
             border: 1px solid var(--purple);
         }
 
-        #info-panel{
+        #info-panel {
             width: 480px;
             background-color: var(--dark-gray);
             border: 1px solid var(--purple);
@@ -43,16 +45,48 @@
             color: var(--cyan)
         }
 
-        #info-panel p{
+        #info-panel p {
             font-size: 0.8em;
             text-align: left;
         }
 
+        #header {
+            width: 60%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2%;
+        }
+
+        #header i {
+            font-size: 2em;
+            color: var(--cyan)
+        }
+
+        #header h1 {
+            margin: 0 2%;
+            letter-spacing: -0.2;
+            color: var(--dark-gray) ;
+            text-shadow:
+                3px 3px 0 var(--cyan),
+                -1px -1px 0 var(--cyan),
+                1px -1px 0 var(--cyan),
+                -1px 1px 0 var(--cyan);
+        }
     </style>
 </head>
 
 <body>
+
+    <div id='header'>
+        <i class="fas fa-robot"></i>
+        <h1>flappyBot</h1>
+    </div>
+
     <div id='content'>
+
+
         <canvas id='content-game' width="480" height="270">
 
         </canvas>
@@ -67,7 +101,7 @@
 
         const game = {
             canvas: document.getElementById('content-game'),
-            infoPanel:{
+            infoPanel: {
                 playerPosition: document.getElementById('player-position')
             },
             start: function () {
@@ -85,7 +119,7 @@
             clear: function () {
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
             },
-            showDebugPanel: function(){
+            showDebugPanel: function () {
                 this.infoPanel.playerPosition.innerHTML = `(${state.player.x},${state.player.y})`
             }
         }
