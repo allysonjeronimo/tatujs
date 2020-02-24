@@ -1,0 +1,79 @@
+:root {
+    --dark-gray: #282a36;
+    --gray: #44475a;
+    --green: #50fa7b;
+    --cyan: #8be9fd;
+    --red: #ff5555;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+    background-color: var(--gray);
+}
+
+#content {
+    text-align: center;
+}
+
+#content-game {
+    background-color: var(--dark-gray);
+    border: 1px solid var(--purple);
+}
+
+#info-panel {
+    width: 480px;
+    background-color: var(--dark-gray);
+    border: 1px solid var(--purple);
+    margin: 0 auto;
+    padding: 0 10px;
+    color: var(--cyan)
+}
+
+#info-panel p {
+    font-size: 0.8em;
+    text-align: left;
+}
+
+#header {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+}
+
+#header i {
+    font-size: 2em;
+    color: var(--cyan)
+}
+
+#header h1 {
+    margin: 0 1%;
+    letter-spacing: -0.2;
+}
+
+#logo-first{
+    font-size: 1em;
+    color: var(--gray) ;
+    text-shadow:
+        3px 3px 0 var(--cyan),
+        -1px -1px 0 var(--cyan),
+        1px -1px 0 var(--cyan),
+        -1px 1px 0 var(--cyan);
+}
+
+#logo-last{
+    padding: 1%;
+    margin-left: 4%;
+    font-size: 1em;
+    /* background-color: var(--cyan); */
+    color: var(--cyan);
+    /* border-radius: 5px; */
+}

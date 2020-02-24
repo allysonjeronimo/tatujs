@@ -5,183 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Bot JS</title>
+    <link rel='stylesheet' href='./css/styles.css'>
+    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/e850e67dac.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --dark-gray: #282a36;
-            --gray: #44475a;
-            --green: #50fa7b;
-            --cyan: #8be9fd;
-            --red: #ff5555;
-            --pink: #ff79c6;
-            --purple: #bd93f9;
-        }
-
-        * {
-            box-sizing: border-box;
-            font-family: 'Ubuntu', sans-serif;
-        }
-
-        body {
-            background-color: var(--gray);
-        }
-
-        #content {
-            text-align: center;
-        }
-
-        #content-game {
-            background-color: var(--dark-gray);
-            border: 1px solid var(--purple);
-        }
-
-        #info-panel {
-            width: 480px;
-            background-color: var(--dark-gray);
-            border: 1px solid var(--purple);
-            margin: 0 auto;
-            padding: 0 10px;
-            color: var(--cyan)
-        }
-
-        #info-panel p {
-            font-size: 0.8em;
-            text-align: left;
-        }
-
-        #header {
-            width: 60%;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2%;
-        }
-
-        #header i {
-            font-size: 2em;
-            color: var(--cyan)
-        }
-
-        #header h1 {
-            margin: 0 2%;
-            letter-spacing: -0.2;
-            color: var(--dark-gray) ;
-            text-shadow:
-                3px 3px 0 var(--cyan),
-                -1px -1px 0 var(--cyan),
-                1px -1px 0 var(--cyan),
-                -1px 1px 0 var(--cyan);
-        }
-    </style>
 </head>
-
 <body>
 
     <div id='header'>
         <i class="fas fa-robot"></i>
-        <h1>flappyBot</h1>
+        <h1><span id='logo-first'>flappy</span><span id='logo-last'>Bot</span></h1>
     </div>
 
     <div id='content'>
-
-
         <canvas id='content-game' width="480" height="270">
-
         </canvas>
         <div id='info-panel'>
             <p>Player Position: <span id='player-position'>(0,0)</span></p>
         </div>
     </div>
 
-    <script>
-
-        let state = {}
-
-        const game = {
-            canvas: document.getElementById('content-game'),
-            infoPanel: {
-                playerPosition: document.getElementById('player-position')
-            },
-            start: function () {
-                this.context = this.canvas.getContext('2d')
-                this.interval = setInterval(updateGame, 20)
-
-                window.addEventListener('keydown', function (e) {
-                    state.player.key = e.keyCode
-                })
-
-                window.addEventListener('keyup', function () {
-                    state.player.key = false
-                })
-            },
-            clear: function () {
-                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-            },
-            showDebugPanel: function () {
-                this.infoPanel.playerPosition.innerHTML = `(${state.player.x},${state.player.y})`
-            }
-        }
-
-        function startGame() {
-            game.start()
-            state.player = new Component(30, 30, '#8be9fd', 10, 10)
-        }
-
-        function updateGame() {
-            game.clear()
-            state.player.update()
-            state.player.draw()
-            game.showDebugPanel()
-        }
-
-
-        function Component(width, height, color, x, y) {
-            this.width = width
-            this.height = height
-            this.color = color
-            this.x = x
-            this.y = y
-            this.speedX = 0
-            this.speedY = 0
-            this.key = false
-            this.steps = 2
-
-            this.checkInput = function () {
-                if (this.key === 37) {
-                    this.speedX = -this.steps
-                    this.speedY = 0
-                }
-                if (this.key === 39) {
-                    this.speedX = this.steps
-                    this.speedY = 0
-                }
-                if (this.key === 38) {
-                    this.speedY = -this.steps
-                    this.speedX = 0
-                }
-                if (this.key === 40) {
-                    this.speedY = this.steps
-                    this.speedX = 0
-                }
-            }
-
-            this.update = function () {
-                this.checkInput()
-                this.x += this.speedX
-                this.y += this.speedY
-            }
-
-            this.draw = function () {
-                game.context.fillStyle = color
-                game.context.fillRect(this.x, this.y, this.width, this.height)
-            }
-        }
-
-        startGame()
-
-    </script>
+    <script src='./js/index.js'></script>
 </body>
 
 </html>
