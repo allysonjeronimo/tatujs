@@ -37,7 +37,6 @@ function updateGame() {
     game.showDebugPanel()
 }
 
-
 function Component(width, height, color, x, y) {
     this.width = width
     this.height = height
