@@ -1,5 +1,53 @@
 let state = {}
 
+/**
+ * Lib Input
+ */
+const inputManager = {
+
+    start: () => {
+
+        this.inputKeys = []
+
+        const keydown = (e) => {
+            if (this.inputKeys.indexOf(e.keyCode) === -1) {
+                this.inputKeys.unshift(e.keyCode)
+            }
+        }
+
+        const keyup = (e) => {
+            let index = this.inputKeys.indexOf(e.keyCode)
+            this.inputKeys.splice(index, 1)
+        }
+
+        window.addEventListener('keydown', keydown)
+        window.addEventListener('keyup', keyup)
+    },
+
+    getAxis: () => {
+        let x = 0
+        let y = 0
+        // left
+        if (this.inputKeys.indexOf(37) !== -1) {
+            x = -1
+        }
+        // right
+        if (this.inputKeys.indexOf(39) !== -1) {
+            x = 1
+        }
+        // up
+        if (this.inputKeys.indexOf(38) !== -1) {
+            y = -1
+        }
+        // down
+        if (this.inputKeys.indexOf(40) !== -1) {
+            y = 1
+        }
+
+        return { x, y }
+    }
+}
+
 const game = {
     canvas: document.getElementById('content-game'),
     infoPanel: {
@@ -8,14 +56,7 @@ const game = {
     start: function () {
         this.context = this.canvas.getContext('2d')
         this.interval = setInterval(updateGame, 20)
-
-        window.addEventListener('keydown', function (e) {
-            state.player.key = e.keyCode
-        })
-
-        window.addEventListener('keyup', function () {
-            state.player.key = false
-        })
+        inputManager.start()
     },
     clear: function () {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -43,34 +84,17 @@ function Component(width, height, color, x, y) {
     this.color = color
     this.x = x
     this.y = y
-    this.speedX = 0
-    this.speedY = 0
+    this.speed = 2
     this.key = false
-    this.steps = 2
 
-    this.checkInput = function () {
-        if (this.key === 37) {
-            this.speedX = -this.steps
-            this.speedY = 0
-        }
-        if (this.key === 39) {
-            this.speedX = this.steps
-            this.speedY = 0
-        }
-        if (this.key === 38) {
-            this.speedY = -this.steps
-            this.speedX = 0
-        }
-        if (this.key === 40) {
-            this.speedY = this.steps
-            this.speedX = 0
-        }
+    this.updatePosition = function () {
+        const axis = inputManager.getAxis()
+        this.x += axis.x * this.speed
+        this.y += axis.y * this.speed
     }
 
     this.update = function () {
-        this.checkInput()
-        this.x += this.speedX
-        this.y += this.speedY
+        this.updatePosition()
     }
 
     this.draw = function () {
