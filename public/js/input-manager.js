@@ -3,6 +3,7 @@
  */
 export default function inputManager() {
     let inputKeys = []
+    let mousePosition = {}
 
     const KEYS = {
         ARROW_UP: 38,
@@ -15,7 +16,13 @@ export default function inputManager() {
         A: 65
     }
 
+    const DEVICES = {
+        KEYBOARD: 0,
+        MOUSE: 1
+    }
+
     Object.freeze(KEYS)
+    Object.freeze(DEVICES)
 
     const keydown = (e) => {
         if (inputKeys.indexOf(e.keyCode) === -1) {
@@ -28,8 +35,13 @@ export default function inputManager() {
         inputKeys.splice(index, 1)
     }
 
+    const mousemove = e => {
+        mousePosition = {x: e.pageX, y: e.pageY}
+    }
+
     window.addEventListener('keydown', keydown)
     window.addEventListener('keyup', keyup)
+    window.addEventListener('mousemove', mousemove)
 
     const hasKey = (key) => {
         return inputKeys.indexOf(key) >= 0
@@ -47,7 +59,7 @@ export default function inputManager() {
             .reduce(reducedToSingleBoolean)
     }
 
-    const getAxis = () => {
+    const getAxisKeyboard = () => {
         let x = 0
         let y = 0
         // left
@@ -70,8 +82,16 @@ export default function inputManager() {
         return { x, y }
     }
 
+    const getAxis = () => {
+        return getAxisKeyboard()
+    }
+
+    const getMousePosition = () => {
+        return mousePosition
+    }
+
     return {
-        KEYS, getAxis
+        KEYS, DEVICES, getAxis, getMousePosition
     }
 }
 

@@ -41,9 +41,13 @@ function Component(width, height, color, x, y) {
     this.speed = 2
 
     this.updatePosition = function () {
-        const axis = input.getAxis()
-        this.x += axis.x * this.speed
-        this.y += axis.y * this.speed
+        // const axis = input.getAxis()
+        // this.x += axis.x * this.speed
+        // this.y += axis.y * this.speed
+        const mousePosition = input.getMousePosition()
+        // convert to canvas position
+        this.x = mousePosition.x
+        this.y = mousePosition.y
     }
 
     this.update = function () {
