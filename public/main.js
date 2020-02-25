@@ -6,7 +6,8 @@ let state = {}
 const game = {
     canvas: document.getElementById('content-game'),
     infoPanel: {
-        playerPosition: document.getElementById('player-position')
+        playerPosition: document.getElementById('player-position'),
+        mouseAbsPosition: document.getElementById('mouse-abs-position')
     },
     start: function () {
         this.context = this.canvas.getContext('2d')
@@ -16,7 +17,8 @@ const game = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
     },
     showDebugPanel: function () {
-        this.infoPanel.playerPosition.innerHTML = `(${state.player.x},${state.player.y})`
+        this.infoPanel.playerPosition.innerHTML = `(${state.player.x},${state.player.y})`,
+        this.infoPanel.mouseAbsPosition.innerHTML = `(${input.getMousePosition(this.canvas).xa},${input.getMousePosition(this.canvas).ya})`
     }
 }
 
@@ -44,7 +46,7 @@ function Component(width, height, color, x, y) {
         // const axis = input.getAxis()
         // this.x += axis.x * this.speed
         // this.y += axis.y * this.speed
-        const mousePosition = input.getMousePosition()
+        const mousePosition = input.getMousePosition(game.canvas)
         // convert to canvas position
         this.x = mousePosition.x
         this.y = mousePosition.y

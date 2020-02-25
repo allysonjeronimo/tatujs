@@ -35,7 +35,7 @@ export default function inputManager() {
         inputKeys.splice(index, 1)
     }
 
-    const mousemove = e => {
+    const mousemove = (e) => {
         mousePosition = {x: e.pageX, y: e.pageY}
     }
 
@@ -86,7 +86,18 @@ export default function inputManager() {
         return getAxisKeyboard()
     }
 
-    const getMousePosition = () => {
+    const getMousePosition = (canvas) => {
+        if(canvas){
+            let rect = canvas.getBoundingClientRect()
+            // console.log('Mouse Absolute Position: ', mousePosition)
+            // console.log('Canvas: ', {x: rect.left, y: rect.top})
+            return {
+                x: mousePosition.x - rect.left,
+                y: mousePosition.y - rect.top,
+                xa: mousePosition.x,
+                ya: mousePosition.y
+            }
+        }
         return mousePosition
     }
 
