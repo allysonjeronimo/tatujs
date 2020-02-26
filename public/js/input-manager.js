@@ -1,5 +1,5 @@
 /**
- * Lib to manager use inputs
+ * Lib to manager user inputs
  */
 export default function inputManager() {
     let inputKeys = []
@@ -69,7 +69,7 @@ export default function inputManager() {
             .reduce(reducedToSingleBoolean)
     }
 
-    const getAxisKeyboard = () => {
+    const getKeyboardAxis = () => {
         let x = 0
         let y = 0
         // left
@@ -92,8 +92,14 @@ export default function inputManager() {
         return { x, y }
     }
 
+    /**
+     * Return a object with X and Y contained
+     * the current input values from key arrows or W,D,S,A
+     * The X values can be -1 (left), 0 (none) or 1 (right)
+     * The Y values can be -1 (up), 0 (none) or 1 (down)
+     */
     const getAxis = () => {
-        return getAxisKeyboard()
+        return getKeyboardAxis()
     }
 
     const getMousePosition = (canvas) => {
