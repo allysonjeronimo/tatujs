@@ -1,7 +1,7 @@
 /**
  * Lib to manager user inputs
  */
-export default function inputManager() {
+export default function InputManager(game) {
     let inputKeys = []
     let mousePosition = {}
     let touchPosition = {}
@@ -102,33 +102,29 @@ export default function inputManager() {
         return getKeyboardAxis()
     }
 
-    const getMousePosition = (canvas) => {
-        if (canvas) {
-            let rect = canvas.getBoundingClientRect()
-            return {
-                x: mousePosition.x - rect.left,
-                y: mousePosition.y - rect.top
-            }
+    const getMousePosition = () => {
+        let canvas = game.getCanvas()
+        let rect = canvas.getBoundingClientRect()
+        return {
+            x: mousePosition.x - rect.left,
+            y: mousePosition.y - rect.top
         }
-        return mousePosition
     }
 
-    const getTouchPosition = (canvas) => {
-        if (canvas) {
-            let rect = canvas.getBoundingClientRect()
-            return {
-                x: touchPosition.x - rect.left,
-                y: touchPosition.y - rect.top
-            }
+    const getTouchPosition = () => {
+        let canvas = game.getCanvas()
+        let rect = canvas.getBoundingClientRect()
+        return {
+            x: touchPosition.x - rect.left,
+            y: touchPosition.y - rect.top
         }
-        return touchPosition
     }
 
     return {
-        KEYS, 
-        DEVICES, 
-        getAxis, 
-        getMousePosition, 
+        KEYS,
+        DEVICES,
+        getAxis,
+        getMousePosition,
         getTouchPosition
     }
 }
