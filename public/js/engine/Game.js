@@ -74,7 +74,9 @@ export default function Game(width = 480, height = 270) {
     }
 
     function addComponent(component) {
+        // check if exists before add
         component.id = components.length + 1
+        component.init(this)
         components.push(component)
     }
 

@@ -8,9 +8,13 @@ export default function Renderer(game){
             game.getCanvas().height)
     }
 
-    function draw(x, y, width, height, color = 'black'){
-        game.getContext().fillStyle = color
-        game.getContext().fillRect(x, y, width, height)
+    function draw(component){
+        game.getContext().fillStyle = component.color
+        game.getContext().fillRect(
+            component.x, 
+            component.y, 
+            component.width, 
+            component.height)
     }
 
     return {
