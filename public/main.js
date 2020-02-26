@@ -16,7 +16,7 @@ const game = {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
     },
     showDebugPanel: function () {
-        this.infoPanel.playerPosition.innerHTML = `(${state.player.x},${state.player.y})`,
+        this.infoPanel.playerPosition.innerHTML = `(${state.player.x},${state.player.y})`
     }
 }
 
