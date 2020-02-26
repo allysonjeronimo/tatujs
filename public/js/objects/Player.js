@@ -1,4 +1,4 @@
-import GameComponent from '../engine/GameComponent.js'
+import GameComponent from '../engine/core/GameComponent.js'
 
 export default class Player extends GameComponent{
 
@@ -12,7 +12,4 @@ export default class Player extends GameComponent{
         this.y = mousePosition.y
     }
 
-    draw(){
-        this.renderer.draw(this)
-    }
 }

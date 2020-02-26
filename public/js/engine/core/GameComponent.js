@@ -20,4 +20,8 @@ export default class GameComponent {
         this.input = InputManager(this.game)
     }
 
+    draw(){
+        this.renderer.draw(this)
+    }
+
 }
