@@ -1,4 +1,3 @@
-# flappybot 
-A clone from Flappy bird
+# game-engine-js
+A simple 2D game engine for JS
 
-Tutorial: https://www.w3schools.com/graphics/game_controllers.asp
