@@ -4,6 +4,7 @@
 export default function inputManager() {
     let inputKeys = []
     let mousePosition = {}
+    let touchPosition = {}
 
     const KEYS = {
         ARROW_UP: 38,
@@ -18,30 +19,39 @@ export default function inputManager() {
 
     const DEVICES = {
         KEYBOARD: 0,
-        MOUSE: 1
+        MOUSE: 1,
+        TOUCH: 2
     }
 
     Object.freeze(KEYS)
     Object.freeze(DEVICES)
 
-    const keydown = (e) => {
+    const keyDown = (e) => {
         if (inputKeys.indexOf(e.keyCode) === -1) {
             inputKeys.unshift(e.keyCode)
         }
     }
 
-    const keyup = (e) => {
+    const keyUp = (e) => {
         let index = inputKeys.indexOf(e.keyCode)
         inputKeys.splice(index, 1)
     }
 
-    const mousemove = (e) => {
-        mousePosition = {x: e.pageX, y: e.pageY}
+    const mouseMove = (e) => {
+        mousePosition = { x: e.pageX, y: e.pageY }
     }
 
-    window.addEventListener('keydown', keydown)
-    window.addEventListener('keyup', keyup)
-    window.addEventListener('mousemove', mousemove)
+    const touchMove = (e) => {
+        touchPosition = {
+            x: e.touches[0].screenX,
+            y: e.touches[0].screenY
+        }
+    }
+
+    window.addEventListener('keydown', keyDown)
+    window.addEventListener('keyup', keyUp)
+    window.addEventListener('mousemove', mouseMove)
+    window.addEventListener('touchmove', touchMove)
 
     const hasKey = (key) => {
         return inputKeys.indexOf(key) >= 0
@@ -87,22 +97,33 @@ export default function inputManager() {
     }
 
     const getMousePosition = (canvas) => {
-        if(canvas){
+        if (canvas) {
             let rect = canvas.getBoundingClientRect()
-            // console.log('Mouse Absolute Position: ', mousePosition)
-            // console.log('Canvas: ', {x: rect.left, y: rect.top})
             return {
                 x: mousePosition.x - rect.left,
-                y: mousePosition.y - rect.top,
-                xa: mousePosition.x,
-                ya: mousePosition.y
+                y: mousePosition.y - rect.top
             }
         }
         return mousePosition
     }
 
+    const getTouchPosition = (canvas) => {
+        if (canvas) {
+            let rect = canvas.getBoundingClientRect()
+            return {
+                x: touchPosition.x - rect.left,
+                y: touchPosition.y - rect.top
+            }
+        }
+        return touchPosition
+    }
+
     return {
-        KEYS, DEVICES, getAxis, getMousePosition
+        KEYS, 
+        DEVICES, 
+        getAxis, 
+        getMousePosition, 
+        getTouchPosition
     }
 }
 
