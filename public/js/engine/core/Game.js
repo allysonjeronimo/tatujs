@@ -1,4 +1,6 @@
 
+import DomManager from '../util/dom-manager.js'
+
 /**
  * Lib do manager game main features
  * @param {*} width 
