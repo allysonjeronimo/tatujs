@@ -10,7 +10,7 @@ export default class GameComponent {
         this.height = height
         this.speed = speed
         this.color = color
-        
+
         this.originalColor = this.color
         this.collidedColor = 'red'
 
@@ -23,11 +23,17 @@ export default class GameComponent {
     }
 
     getRectangle = () => {
+
+        let top = this.y
+        let right = this.x + this.width
+        let bottom = this.y + this.height
+        let left = this.x
+
         return {
-            top: this.y,
-            right: this.x + this.width,
-            bottom: this.y + this.height,
-            left: this.x
+            top,
+            right,
+            bottom,
+            left
         }
     }
 
@@ -46,13 +52,14 @@ export default class GameComponent {
     collisionWith(other) {
         if (!this.checkCollision) return
 
-        if (this.x + this.width > other.x && this.x < other.x + other.width &&
-            this.y + this.height > other.y && this.y < other.y + other.height) {
-            this.color = this.collidedColor
+        let thisRectangle = this.getRectangle()
+        let otherRectangle = other.getRectangle()
+
+        if (thisRectangle.right > otherRectangle.left && thisRectangle.left < otherRectangle.right &&
+            thisRectangle.bottom > otherRectangle.top && thisRectangle.top < otherRectangle.bottom) {
             return true
         }
         else {
-            this.color = this.originalColor
             return false
         }
     }

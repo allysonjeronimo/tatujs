@@ -11,4 +11,10 @@ export default class Player extends GameComponent{
         this.x = mousePosition.x
         this.y = mousePosition.y
     }
+
+    collisionWith(other){
+        if(super.collisionWith(other)){
+
+        }
+    }
 }
