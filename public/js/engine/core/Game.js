@@ -17,37 +17,17 @@ export default function Game(width = 480, height = 270) {
     init()
 
     function initDOM() {
-        // create div content
-        let content = document.createElement('div')
-        content.id = 'content'
 
-        // create canvas
-        canvas = document.createElement('canvas')
-        canvas.id = 'content-game'
+        const dom = DomManager()
 
-        // create info panel
-        let infoPanel = document.createElement('div')
-        infoPanel.id = 'info-panel'
+        let content = dom.create('div', null, null, {id: 'content'})
+        canvas = dom.create('canvas', content, null, {id: 'content-game', width, height})
+        let infoPanel = dom.create('div', content, null, {id: 'info-panel'})
+        let playerPosition = dom.create('p', infoPanel, "Player Position: <span id='player-position-value'>(0,0)</span>", {id: 'player-position'})
 
-        // create p and added to info-panel
-        let p = document.createElement('p')
-        p.id = 'player-position'
-        p.innerHTML = "Player Position: <span id='player-position-value'>(0,0)</span>"
-
-        infoPanel.appendChild(p)
-
-        // add canvas to content
-        content.appendChild(canvas)
-        content.appendChild(infoPanel)
+        dom.insertBefore(content, dom.getFirst('body'))
 
         context = canvas.getContext('2d')
-        canvas.width = width
-        canvas.height = height
-
-        // add content inside page body
-        document.body.insertBefore(
-            content, document.body.childNodes[0])
-
     }
 
     function init() {
