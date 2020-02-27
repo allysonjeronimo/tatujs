@@ -10,6 +10,7 @@ export default function Game(width = 480, height = 270) {
     let components = []
     let canvas
     let context
+    let interval
 
     init()
 
@@ -51,13 +52,31 @@ export default function Game(width = 480, height = 270) {
         // init general variables
         initDOM()
 
-        setInterval(updateGame, 20)
+        interval = setInterval(updateGame, 20)
     }
 
+    function stop() {
+        clearInterval(interval)
+    }
+
+    function checkCollisions(component) {
+        components.forEach(
+            current => {
+                if (component.id != current.id &&
+                    component.collisionWith(current)) {
+                        
+                }
+            }
+        )
+    }
 
     function updateGame() {
         components.forEach(
-            c => c.update()
+            c => {
+                c.update()
+                // check collisions?
+                checkCollisions(c)
+            }
         )
 
         drawGame()
@@ -86,11 +105,11 @@ export default function Game(width = 480, height = 270) {
         components.splice(component.id, 1)
     }
 
-    function getContext(){
+    function getContext() {
         return context
     }
 
-    function getCanvas(){
+    function getCanvas() {
         return canvas
     }
 
