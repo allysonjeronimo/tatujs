@@ -17,14 +17,9 @@ export default function Game(width = 480, height = 270) {
     init()
 
     function initDOM() {
-
         let dm = DomManager()
-
         dm.create('div', {id: 'content'})
-        canvas = dm.create('canvas', {id: 'content-game', width: 800, height: 600, parent: 'content'})
-        dm.create('div', {id: 'info-panel', parent: 'content'})
-        dm.create('p', {id: 'player-position', parent: 'panel'})
-
+        canvas = dm.create('canvas', {id: 'content-game', width, height, parent: 'content'})
         context = canvas.getContext('2d')
     }
 
@@ -44,7 +39,6 @@ export default function Game(width = 480, height = 270) {
             current => {
                 if (component.id != current.id &&
                     component.collisionWith(current)) {
-
                 }
             }
         )
