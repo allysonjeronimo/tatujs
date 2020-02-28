@@ -20,10 +20,16 @@ export default function Game(width = 480, height = 270) {
 
         const dom = DomManager()
 
-        let content = dom.create('div', null, null, {id: 'content'})
-        canvas = dom.create('canvas', content, null, {id: 'content-game', width, height})
-        let infoPanel = dom.create('div', content, null, {id: 'info-panel'})
-        let playerPosition = dom.create('p', infoPanel, "Player Position: <span id='player-position-value'>(0,0)</span>", {id: 'player-position'})
+
+        let content = dom.create('div', {id: 'content'})
+        let canvas = content.create('canvas', {id: 'content-game', width: 800, height: 600})
+        let panel = content.create('div', {id: 'info-panel'})
+        let p = panel.create('p', {id: 'player-position'})
+        
+        let content = dom.create('div', null, null, { id: 'content' })
+        canvas = dom.create('canvas', content, null, { id: 'content-game', width, height })
+        let infoPanel = dom.create('div', content, null, { id: 'info-panel' })
+        let playerPosition = dom.create('p', infoPanel, "Player Position: <span id='player-position-value'>(0,0)</span>", { id: 'player-position' })
 
         dom.insertBefore(content, dom.getFirst('body'))
 
@@ -46,7 +52,7 @@ export default function Game(width = 480, height = 270) {
             current => {
                 if (component.id != current.id &&
                     component.collisionWith(current)) {
-                        
+
                 }
             }
         )

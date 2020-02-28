@@ -1,0 +1,18 @@
+- DOM-Manager
+
+
+- It's a simple javascript lib that allows 
+to manipulate the DOM easily and efficiently.
+
+- 
+
+Features:
+
+- Create a Element with content, parent and many attributes 
+  with a single call
+
+- Cria hierarquia de elementos em memória e só depois
+da chamada do "apply" é que os elementos são de fato criados
+na DOM.
+
+- Permite estilização via CSS via JS.
