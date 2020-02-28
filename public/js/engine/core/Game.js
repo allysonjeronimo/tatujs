@@ -18,20 +18,12 @@ export default function Game(width = 480, height = 270) {
 
     function initDOM() {
 
-        const dom = DomManager()
+        let dm = DomManager()
 
-
-        let content = dom.create('div', {id: 'content'})
-        let canvas = content.create('canvas', {id: 'content-game', width: 800, height: 600})
-        let panel = content.create('div', {id: 'info-panel'})
-        let p = panel.create('p', {id: 'player-position'})
-        
-        let content = dom.create('div', null, null, { id: 'content' })
-        canvas = dom.create('canvas', content, null, { id: 'content-game', width, height })
-        let infoPanel = dom.create('div', content, null, { id: 'info-panel' })
-        let playerPosition = dom.create('p', infoPanel, "Player Position: <span id='player-position-value'>(0,0)</span>", { id: 'player-position' })
-
-        dom.insertBefore(content, dom.getFirst('body'))
+        dm.create('div', {id: 'content'})
+        canvas = dm.create('canvas', {id: 'content-game', width: 800, height: 600, parent: 'content'})
+        dm.create('div', {id: 'info-panel', parent: 'content'})
+        dm.create('p', {id: 'player-position', parent: 'panel'})
 
         context = canvas.getContext('2d')
     }

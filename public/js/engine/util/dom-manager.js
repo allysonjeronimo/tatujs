@@ -1,57 +1,35 @@
-export default class DomManager {
-
-    constructor(element, attrs) {
-        this.domElement = 
-            element ? 
-            this.create(element, attrs) : 
-            this.getBody()
-    }
-
-    getBody() {
-        return document.querySelector('body')
-    }
-
-    create(element, attrs) {
-        // create element
-        let created = document.createElement(element)
-        // define parent
-        if (parent) {
-            parent.appendChild(created)
-        }
-        // content
-        created.innerHTML = content
-        // attrs
-        for (let attr in attrs) {
-            created[attr] = attrs[attr]
-        }
-
-        return created
-    }
-
-}
-
-
-
 export default function DomManager() {
 
     /**
      * @param {String} element
-     * @param {String} parent
-     * @param {String} content
-     * @param {Object} attrs (id, name, etc)
+     * @param {Object} settings (id, name, parent, content, class, etc)
      */
-    function create(element, parent, content, attrs) {
+    function create(element, settings) {
         // create element
         let created = document.createElement(element)
         // define parent
-        if (parent) {
-            parent.appendChild(created)
+        if (settings.parent) {
+            let parentElement = get('#' + settings.parent)
+            if(parentElement){
+                parentElement.appendChild(created)
+            }
+            delete settings.parent
         }
+        else{
+            // body is the parent
+            let body = get('body')
+            body.appendChild(created)
+        }
+
         // content
-        created.innerHTML = content
+        if(settings.content){
+            created.innerHTML = settings.content
+            delete settings.content
+        }
+
         // attrs
-        for (let attr in attrs) {
-            created[attr] = attrs[attr]
+        for (let attr in settings) {
+            created[attr] = settings[attr]
         }
 
         return created
@@ -64,12 +42,6 @@ export default function DomManager() {
     function get(query) {
         return document.querySelector(query)
     }
-
-    function insertBefore(element, parent) {
-        parent.insertBefore(
-            element, parent.childNodes[0])
-    }
-
 
     return {
         create,
