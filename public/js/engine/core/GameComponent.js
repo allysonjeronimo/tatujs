@@ -10,6 +10,7 @@ export default class GameComponent {
      * @param {Number} settings.width
      * @param {Number} settings.height
      * @param {Boolean} settings.collision
+     * @param {String} settings.color
      */
     constructor(settings) {
         if (settings) {
@@ -18,15 +19,16 @@ export default class GameComponent {
             this.width = settings.width
             this.height = settings.height
             this.collision = settings.collision
+            this.color = settings.color
         }
 
         this.components = {}
     }
 
-    generateId(){
+    generateId() {
         let keys = Object.keys(this.components)
         let length = keys.length
-        return length == 0 ? 0 : parseInt(keys[length-1])+1
+        return length == 0 ? 0 : parseInt(keys[length - 1]) + 1
     }
 
     addComponent(component) {
@@ -40,8 +42,8 @@ export default class GameComponent {
         if (this.parent && component.id === this.id) {
             delete this.parent.components[component.id]
         }
-        else{
-            delete this.components[component.id]    
+        else {
+            delete this.components[component.id]
         }
     }
 
@@ -99,16 +101,20 @@ export default class GameComponent {
     collisionWith(other) {
         if (!this.collision) return
 
-        let thisRectangle = this.getRectangle()
-        let otherRectangle = other.getRectangle()
+        if (other.collision) {
 
-        if (thisRectangle.right > otherRectangle.left && thisRectangle.left < otherRectangle.right &&
-            thisRectangle.bottom > otherRectangle.top && thisRectangle.top < otherRectangle.bottom) {
-            return true
+            let thisRectangle = this.getRectangle()
+            let otherRectangle = other.getRectangle()
+            if (thisRectangle.right > otherRectangle.left && thisRectangle.left < otherRectangle.right &&
+                thisRectangle.bottom > otherRectangle.top && thisRectangle.top < otherRectangle.bottom) {
+                return true
+            }
+            else {
+                return false
+            }
+
         }
-        else {
-            return false
-        }
+
     }
 
 }

@@ -1,29 +1,39 @@
 import GameComponent from "../engine/core/GameComponent.js";
 import Obstacle from "./Obstacle.js";
+import MathUtil from '../engine/util/math-util.js'
+import Renderer from "../engine/core/Renderer.js";
 
-export default class ObstacleManager extends GameComponent{
+export default class ObstacleManager extends GameComponent {
 
-    init(game){
+    init(game) {
         super.init(game)
-        this.interval = 100
+        this.interval = 200
         this.screenSize = this.game.getScreenSize()
-        this.settings = {
-            x: this.screenSize.width + 10, 
-            y: this.screenSize.height - 30,
-            width: 10,
-            height: 30
-        }
     }
 
-    update(){
+    update() {
         super.update()
         this.spawn()
-        console.log('Components: ' + Object.keys(this.components).length)
     }
 
-    spawn(){
-        if(this.game.everyInterval(this.interval)){
-            let obstacle = new Obstacle(this.settings)
+    spawn() {
+        if (this.game.everyInterval(this.interval)) {
+
+            let math = MathUtil()
+            let heights = [30, 60, 90]
+            let height = heights[math.random(0,2)]
+            let width = 10
+
+            let settings = {
+                x: this.screenSize.width + width,
+                y: this.screenSize.height - height,
+                width: width,
+                height: height,
+                color: 'red',
+                collision: true
+            }
+
+            let obstacle = new Obstacle(settings)
             super.addComponent(obstacle)
         }
     }

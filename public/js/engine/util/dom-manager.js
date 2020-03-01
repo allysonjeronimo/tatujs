@@ -1,3 +1,4 @@
+// singleton
 export default function DomManager() {
 
     /**

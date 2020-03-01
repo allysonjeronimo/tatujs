@@ -39,15 +39,23 @@ export default function Game(width = 480, height = 270) {
         clearInterval(interval)
     }
     
-    function checkCollisions(component) {
-        components.forEach(
-            current => {
-                if (component.id != current.id &&
-                    component.collisionWith(current)) {
+    function processCollisions(component, components){
+        if(component.collision && components){
+            components.forEach(
+                current => {
+                    if(current.id != component.id && current.collision){
+                        console.log('check collision between: ', component, current)
+                        component.collisionWith(current)
+                    }
+                    // has children
+                    if(current.components){
+                        processCollisions(component, current.children)
+                    }
                 }
-            }
-        )
-    } 
+            )
+        }
+    }
+
 
     function everyInterval(n){
         if((frameCount / n) % 1 == 0){
@@ -61,10 +69,10 @@ export default function Game(width = 480, height = 270) {
         components.forEach(
             c => {
                 c.update(frameCount)
-                // check collisions?
-                checkCollisions(c)
+                processCollisions(c, components)
             }
         )
+        
         drawGame()
         
     }

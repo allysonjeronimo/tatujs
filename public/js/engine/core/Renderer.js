@@ -2,6 +2,16 @@ export default function Renderer(game){
 
     let defaultColor = '#8be9fd'
 
+    const COLORS = {
+        RED: 'red',
+        BLUE: 'blue',
+        GREEN: 'green',
+        BLACK: 'black',
+        WHITE: 'white'
+    }
+
+    Object.freeze(COLORS)
+
     function clear(){
         game.getContext().clearRect(
             0, 
@@ -11,7 +21,7 @@ export default function Renderer(game){
     }
 
     function draw(component){
-        game.getContext().fillStyle = defaultColor
+        game.getContext().fillStyle = component.color ? component.color : defaultColor
         game.getContext().fillRect(
             component.x, 
             component.y, 
@@ -21,6 +31,7 @@ export default function Renderer(game){
 
     return {
         clear,
-        draw
+        draw,
+        COLORS
     }
 }

@@ -13,12 +13,9 @@ export default class Player extends GameComponent {
         this.y = mousePosition.y
     }
 
-    draw(){
-        super.draw()
-    }
-
     collisionWith(other) {
         if (super.collisionWith(other)) {
+            console.log('Player collided with: ', other)
             this.game.stop()
         }
     }
