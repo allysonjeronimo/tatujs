@@ -3,23 +3,46 @@ import InputManager from './InputManager.js'
 
 export default class GameComponent {
 
-    constructor(x, y, width, height, speed, color, checkCollision = false) {
-        this.x = x
-        this.y = y
-        this.width = width
-        this.height = height
-        this.speed = speed
-        this.color = color
+    /**
+     * @param {Object} settings - {x, y, width, height, collision}
+     * @param {Number} settings.x
+     * @param {Number} settings.y 
+     * @param {Number} settings.width
+     * @param {Number} settings.height
+     * @param {Boolean} settings.collision
+     */
+    constructor(settings) {
+        if (settings) {
+            this.x = settings.x
+            this.y = settings.y
+            this.width = settings.width
+            this.height = settings.height
+            this.collision = settings.collision
+        }
 
-        this.originalColor = this.color
-        this.collidedColor = 'red'
+        this.components = {}
+    }
 
-        this.checkCollision = checkCollision
+    generateId(){
+        let keys = Object.keys(this.components)
+        let length = keys.length
+        return length == 0 ? 0 : parseInt(keys[length-1])+1
+    }
 
-        this.top = this.y
-        this.right = this.x + this.width
-        this.bottom = this.y + this.height
-        this.left = this.x
+    addComponent(component) {
+        component.id = this.generateId()
+        component.parent = this
+        component.init(this.game)
+        this.components[component.id] = component
+    }
+
+    removeComponent(component) {
+        if (this.parent && component.id === this.id) {
+            delete this.parent.components[component.id]
+        }
+        else{
+            delete this.components[component.id]    
+        }
     }
 
     getRectangle = () => {
@@ -41,16 +64,40 @@ export default class GameComponent {
     // is added to game
     init(game) {
         this.game = game
+        // use singleton
         this.renderer = Renderer(this.game)
         this.input = InputManager(this.game)
     }
 
+    update() {
+        if (Object.keys(this.components).length) {
+            this.updateComponents()
+        }
+    }
+
+    updateComponents() {
+        for (let i in this.components) {
+            this.components[i].update()
+        }
+    }
+
     draw() {
-        this.renderer.draw(this)
+        if (Object.keys(this.components).length) {
+            this.drawComponents()
+        }
+        else {
+            this.renderer.draw(this)
+        }
+    }
+
+    drawComponents() {
+        for (let i in this.components) {
+            this.components[i].draw()
+        }
     }
 
     collisionWith(other) {
-        if (!this.checkCollision) return
+        if (!this.collision) return
 
         let thisRectangle = this.getRectangle()
         let otherRectangle = other.getRectangle()

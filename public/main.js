@@ -1,14 +1,14 @@
 import Game from './js/engine/core/Game.js'
 import Player from './js/objects/Player.js'
-import Obstacle from './js/objects/Obstacle.js'
+import ObstacleManager from './js/objects/ObstacleManager.js'
 
 const game = Game()
 // create and add components to game
-const player = new Player(10, 10, 30, 30, 2, '#8be9fd')
-const obstacle = new Obstacle(300, 120, 10, 200, 0, '#8be9fd')
+const player = new Player({x:10, y:10, width:30, height:30, collision:true})
+const obstacleManager = new ObstacleManager()
 
 game.addComponent(player)
-game.addComponent(obstacle)
+game.addComponent(obstacleManager)
 
 
 

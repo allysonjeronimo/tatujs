@@ -2,11 +2,20 @@ import GameComponent from '../engine/core/GameComponent.js'
 
 export default class Obstacle extends GameComponent {
 
-    constructor(x, y, width, height, speed, color) {
-        super(x, y, width, height, speed, color)
+    constructor(settings) {
+        super(settings)
+        this.speed = 1
     }
 
     update(){
-        
+        super.update()
+        this.x -= this.speed
+        this.checkToDestroy()
+    }
+
+    checkToDestroy(){
+        if(this.x < 0){
+           this.removeComponent(this)
+        }
     }
 }

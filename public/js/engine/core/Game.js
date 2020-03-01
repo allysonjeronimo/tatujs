@@ -13,13 +13,17 @@ export default function Game(width = 480, height = 270) {
     let canvas
     let context
     let interval
+    let frameCount
+    let dm = DomManager()
 
     init()
 
     function initDOM() {
-        let dm = DomManager()
+        
         dm.create('div', {id: 'content'})
         canvas = dm.create('canvas', {id: 'content-game', width, height, parent: 'content'})
+        dm.create('div', {id:'info-panel', parent:'content'})
+        dm.create('p', {id:'component-position', parent:'info-panel'})
         context = canvas.getContext('2d')
     }
 
@@ -27,13 +31,14 @@ export default function Game(width = 480, height = 270) {
         // init general variables
         initDOM()
 
-        interval = setInterval(updateGame, 20)
+        interval = setInterval(updateGame, 20)// 20
+        frameCount = 0
     }
 
     function stop() {
         clearInterval(interval)
     }
-
+    
     function checkCollisions(component) {
         components.forEach(
             current => {
@@ -42,18 +47,32 @@ export default function Game(width = 480, height = 270) {
                 }
             }
         )
+    } 
+
+    function everyInterval(n){
+        if((frameCount / n) % 1 == 0){
+            return true
+        }
+        return false
     }
 
     function updateGame() {
+        frameCount++
         components.forEach(
             c => {
-                c.update()
+                c.update(frameCount)
                 // check collisions?
                 checkCollisions(c)
             }
         )
-
         drawGame()
+        
+    }
+
+    function showPosition(component){
+        dm.setContent(
+            'component-position', 
+            `Position: (${component.x}, ${component.y})`)
     }
 
     function drawGame() {
@@ -68,7 +87,7 @@ export default function Game(width = 480, height = 270) {
 
     function addComponent(component) {
         // check if exists before add
-        component.id = components.length + 1
+        component.id = components.length
         component.init(this)
         components.push(component)
     }
@@ -87,11 +106,22 @@ export default function Game(width = 480, height = 270) {
         return canvas
     }
 
+    /**
+     * @returns {width, height}
+     */
+    function getScreenSize(){
+        return {width, height}
+    }
+
     return {
         addComponent,
         removeComponent,
         getCanvas,
-        getContext
+        getContext,
+        stop,
+        everyInterval,
+        getScreenSize,
+        showPosition
     }
 }
 

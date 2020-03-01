@@ -43,9 +43,15 @@ export default function DomManager() {
         return document.querySelector(query)
     }
 
+    function setContent(id, content){
+        let element = get('#'+id)
+        element.innerHTML = content
+    }
+
     return {
         create,
-        get
+        get,
+        setContent
     }
 
 }
