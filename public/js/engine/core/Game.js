@@ -8,6 +8,9 @@ import DomManager from '../util/DomManager.js'
  */
 export default function Game(width = 480, height = 270) {
 
+    if(typeof Game.instance === 'object')
+        return Game.instance
+
     // game components to call update and draw
     let components = []
     let canvas
@@ -19,11 +22,10 @@ export default function Game(width = 480, height = 270) {
     init()
 
     function initDOM() {
-        
-        dm.create('div', {id: 'content'})
-        canvas = dm.create('canvas', {id: 'content-game', width, height, parent: 'content'})
-        dm.create('div', {id:'info-panel', parent:'content'})
-        dm.create('p', {id:'component-position', parent:'info-panel'})
+        dm.create('div', { id: 'content' })
+        canvas = dm.create('canvas', { id: 'content-game', width, height, parent: 'content' })
+        dm.create('div', { id: 'info-panel', parent: 'content' })
+        dm.create('p', { id: 'component-position', parent: 'info-panel' })
         context = canvas.getContext('2d')
     }
 
@@ -35,33 +37,21 @@ export default function Game(width = 480, height = 270) {
         frameCount = 0
     }
 
-    function stop() {
-        clearInterval(interval)
-    }
-    
-    function processCollisions(component, components){
-        if(component.collision && components){
+    function processCollisions(component, components) {
+        if (component.collision && components) {
             components.forEach(
                 current => {
-                    if(current.id != component.id && current.collision){
+                    if (current.id != component.id && current.collision) {
                         console.log('check collision between: ', component, current)
                         component.collisionWith(current)
                     }
                     // has children
-                    if(current.components){
+                    if (current.components) {
                         processCollisions(component, current.children)
                     }
                 }
             )
         }
-    }
-
-
-    function everyInterval(n){
-        if((frameCount / n) % 1 == 0){
-            return true
-        }
-        return false
     }
 
     function updateGame() {
@@ -72,15 +62,7 @@ export default function Game(width = 480, height = 270) {
                 processCollisions(c, components)
             }
         )
-        
         drawGame()
-        
-    }
-
-    function showPosition(component){
-        dm.setContent(
-            'component-position', 
-            `Position: (${component.x}, ${component.y})`)
     }
 
     function drawGame() {
@@ -93,43 +75,49 @@ export default function Game(width = 480, height = 270) {
         )
     }
 
-    function addComponent(component) {
+    this.stop = function () {
+        clearInterval(interval)
+    }
+
+    this.everyInterval = function (n) {
+        if ((frameCount / n) % 1 == 0) {
+            return true
+        }
+        return false
+    }
+
+    this.showPosition = function(component) {
+        dm.setContent(
+            'component-position',
+            `Position: (${component.x}, ${component.y})`)
+    }
+
+    this.addComponent = function(component) {
         // check if exists before add
         component.id = components.length
         component.init(this)
         components.push(component)
     }
 
-    function removeComponent(component) {
+    this.removeComponent = function(component) {
         if (!component.id) return
-
+        // view in gamecomponent
         components.splice(component.id, 1)
     }
 
-    function getContext() {
+    // renderer
+    this.getContext = function() {
         return context
     }
 
-    function getCanvas() {
+    this.getCanvas = function(){
         return canvas
     }
 
-    /**
-     * @returns {width, height}
-     */
-    function getScreenSize(){
-        return {width, height}
+    this.getScreenSize = function() {
+        return { width, height }
     }
 
-    return {
-        addComponent,
-        removeComponent,
-        getCanvas,
-        getContext,
-        stop,
-        everyInterval,
-        getScreenSize,
-        showPosition
-    }
+    Game.instance = this
 }
 

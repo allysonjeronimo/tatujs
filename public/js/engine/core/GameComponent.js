@@ -98,22 +98,18 @@ export default class GameComponent {
     }
 
     collisionWith(other) {
-        if (!this.collision) return
+        if (!this.collision || !other.collision) return
 
-        if (other.collision) {
-
-            let thisRectangle = this.getRectangle()
-            let otherRectangle = other.getRectangle()
-            if (thisRectangle.right > otherRectangle.left && thisRectangle.left < otherRectangle.right &&
-                thisRectangle.bottom > otherRectangle.top && thisRectangle.top < otherRectangle.bottom) {
-                return true
-            }
-            else {
-                return false
-            }
-
+        let thisRectangle = this.getRectangle()
+        let otherRectangle = other.getRectangle()
+        
+        if (thisRectangle.right > otherRectangle.left && thisRectangle.left < otherRectangle.right &&
+            thisRectangle.bottom > otherRectangle.top && thisRectangle.top < otherRectangle.bottom) {
+            return true
         }
-
+        else {
+            return false
+        }
     }
 
 }
