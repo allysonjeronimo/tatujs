@@ -14,7 +14,6 @@ export default function Collection() {
 
     this.add = function (item) {
         item._id = nextId(item)
-        console.log('Generated ID: ' + item._id)
         items[item._id] = item
     }
 

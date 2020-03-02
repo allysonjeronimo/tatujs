@@ -16,6 +16,5 @@ export default class Player extends GameComponent {
 
     onCollision(other) {
         this.color = Colors.RED
-        console.log('Player collided with: ' + other.name)
     }
 }
