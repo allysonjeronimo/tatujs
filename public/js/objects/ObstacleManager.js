@@ -1,6 +1,7 @@
 import GameComponent from "../engine/core/GameComponent.js";
 import Obstacle from "./Obstacle.js";
 import MathUtil from '../engine/util/MathUtil.js'
+import Colors from '../engine/util/Colors.js'
 
 export default class ObstacleManager extends GameComponent {
 
@@ -28,8 +29,8 @@ export default class ObstacleManager extends GameComponent {
                 y: this.screenSize.height - height,
                 width: width,
                 height: height,
-                color: 'red',
-                collision: true
+                color: Colors.RED,
+                detectCollision: true
             }
 
             let obstacle = new Obstacle(settings)

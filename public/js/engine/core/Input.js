@@ -78,19 +78,19 @@ export default function Input(settings) {
         let x = 0
         let y = 0
         // left
-        if (hasSomeKey(KEYS.ARROW_LEFT, KEYS.A)) {
+        if (hasSomeKey(Input.KEYS.ARROW_LEFT, Input.KEYS.A)) {
             x = -1
         }
         // right
-        if (hasSomeKey(KEYS.ARROW_RIGHT, KEYS.D)) {
+        if (hasSomeKey(Input.KEYS.ARROW_RIGHT, Input.KEYS.D)) {
             x = 1
         }
         // up
-        if (hasSomeKey(KEYS.ARROW_UP, KEYS.W)) {
+        if (hasSomeKey(Input.KEYS.ARROW_UP, Input.KEYS.W)) {
             y = -1
         }
         // down
-        if (hasSomeKey(KEYS.ARROW_DOWN, KEYS.S)) {
+        if (hasSomeKey(Input.KEYS.ARROW_DOWN, Input.KEYS.S)) {
             y = 1
         }
 

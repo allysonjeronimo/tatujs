@@ -5,13 +5,14 @@ import Collection from '../util/Collection.js'
 export default class GameComponent {
 
     /**
-     * @param {Object} settings - {x, y, width, height, collision}
+     * @param {Object} settings - {x, y, width, height, detectCollision}
      * @param {Number} settings.x
      * @param {Number} settings.y 
      * @param {Number} settings.width
      * @param {Number} settings.height
-     * @param {Boolean} settings.collision
+     * @param {Boolean} settings.detectCollision
      * @param {String} settings.color
+     * @param {String} settings.tag
      */
     constructor(settings) {
         if (settings) {
@@ -19,8 +20,9 @@ export default class GameComponent {
             this.y = settings.y
             this.width = settings.width
             this.height = settings.height
-            this.collision = settings.collision
+            this.detectCollision = settings.detectCollision
             this.color = settings.color
+            this.name = this.constructor.name
         }
 
         this.components = new Collection()
@@ -41,27 +43,13 @@ export default class GameComponent {
         }
     }
 
-    getRectangle = () => {
-
-        let top = this.y
-        let right = this.x + this.width
-        let bottom = this.y + this.height
-        let left = this.x
-
-        return {
-            top,
-            right,
-            bottom,
-            left
-        }
-    }
-
     // called by game when this component
     // is added to game
     init(game) {
         this.game = game
         this.renderer = game.getRenderer()
         this.input = game.getInput()
+        this.physics = game.getPhysics()
     }
 
     update() {
@@ -89,19 +77,5 @@ export default class GameComponent {
         )
     }
 
-    collisionWith(other) {
-        if (!this.collision || !other.collision) return
-
-        let thisRectangle = this.getRectangle()
-        let otherRectangle = other.getRectangle()
-
-        if (thisRectangle.right > otherRectangle.left && thisRectangle.left < otherRectangle.right &&
-            thisRectangle.bottom > otherRectangle.top && thisRectangle.top < otherRectangle.bottom) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-
+    onCollision(other){}
 }

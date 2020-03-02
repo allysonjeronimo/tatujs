@@ -5,14 +5,16 @@ export default function Collection() {
 
     let items = {}
 
-    const nextId = function () {
+    const nextId = function (item) {
         let keys = Object.keys(items)
         let length = keys.length
-        return length == 0 ? 0 : parseInt(keys[length - 1]) + 1
+        let index = length == 0 ? 0 : parseInt(keys[length - 1].split('-')[1]) + 1
+        return `${item.name ? item.name : 'Default'}-${index}`
     }
 
     this.add = function (item) {
-        item._id = nextId()
+        item._id = nextId(item)
+        console.log('Generated ID: ' + item._id)
         items[item._id] = item
     }
 

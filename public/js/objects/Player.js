@@ -1,22 +1,21 @@
 import GameComponent from '../engine/core/GameComponent.js'
+import Colors from '../engine/util/Colors.js'
 
 export default class Player extends GameComponent {
 
     constructor(settings) {
         super(settings)
+        this.speed = 2
     }
 
     update() {
         super.update()
-        let mousePosition = this.input.getMousePosition()
-        this.x = mousePosition.x
-        this.y = mousePosition.y
+        let axis = this.input.getAxis()
+        this.x += axis.x ? axis.x * this.speed : 0
     }
 
-    collisionWith(other) {
-        if (super.collisionWith(other)) {
-            console.log('Player collided with: ', other)
-            this.game.stop()
-        }
+    onCollision(other) {
+        this.color = Colors.RED
+        console.log('Player collided with: ' + other.name)
     }
 }

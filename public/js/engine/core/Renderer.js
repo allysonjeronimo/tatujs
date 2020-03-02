@@ -1,4 +1,5 @@
 import DomManager from '../util/DomManager.js'
+import Colors from '../util/Colors.js'
 
 export default function Renderer(settings) {
 
@@ -10,17 +11,6 @@ export default function Renderer(settings) {
     let dm = new DomManager()
     let width
     let height 
-
-    Renderer.COLORS = {
-        RED: 'red',
-        BLUE: 'blue',
-        GREEN: 'green',
-        BLACK: 'black',
-        WHITE: 'white',
-        DEFAULT: '#8be9fd'
-    }
-
-    Object.freeze(Renderer.COLORS)
 
     init()
 
@@ -45,7 +35,7 @@ export default function Renderer(settings) {
     }
 
     this.draw = function (component) {
-        context.fillStyle = component.color ? component.color : Renderer.COLORS.DEFAULT
+        context.fillStyle = component.color ? component.color : Colors.DEFAULT
         context.fillRect(
             component.x,
             component.y,

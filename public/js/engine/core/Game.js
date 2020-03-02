@@ -2,6 +2,7 @@
 import Collection from '../util/Collection.js'
 import Renderer from './Renderer.js'
 import Input from './Input.js'
+import Physics from './Physics.js'
 
 /**
  * Lib do manager game main features
@@ -10,11 +11,15 @@ import Input from './Input.js'
  * @param {Number} settings.renderer.width 
  * @param {Number} settings.renderer.height 
  * @param {Object} settings.input
+ * @param {Object} settings.physics
  */
-export default function Game(settings = {
-    renderer: { width: 800, height: 600 },
-    input : {}
-    }) {
+export default function Game(
+    settings = {
+        renderer: { width: 800, height: 600 },
+        input : {},
+        physics: {}
+    }) 
+    {
 
     if (typeof Game.instance === 'object')
         return Game.instance
@@ -25,6 +30,7 @@ export default function Game(settings = {
     let frameCount
     let renderer = new Renderer(settings.renderer)
     let input = new Input({ ...settings.input, clientRect: renderer.getCanvas().getBoundingClientRect() })
+    let physics = new Physics(settings.physics)
 
     init()
 
@@ -34,16 +40,19 @@ export default function Game(settings = {
     }
 
     function processCollisions(component, components) {
-        if (component.collision && components) {
+        // if components is a collision object
+        // components (exactly the specific components that was registered to collided with component)
+        if (component.detectCollision && components) {
             components.forEach(
                 current => {
-                    if (current._id != component._id && current.collision) {
-                        console.log('check collision between: ', component, current)
-                        component.collisionWith(current)
+                    // TIP: check collision just with objects that can move
+                    if (component._id != current._id && physics.checkCollision(component, current)) {
+                        // notify component
+                        component.onCollision(current)
                     }
                     // has children
-                    if (current.components) {
-                        processCollisions(component, current.children)
+                    if (current.components.size()) {
+                        processCollisions(component, current.components)
                     }
                 }
             )
@@ -55,7 +64,8 @@ export default function Game(settings = {
         components.forEach(
             c => {
                 c.update(frameCount)
-                // processCollisions(c, components)
+                // restrict targets (by some data structure based on collision matrix)
+                processCollisions(c, components)
             }
         )
         drawGame()
@@ -96,6 +106,10 @@ export default function Game(settings = {
 
     this.getRenderer = function () {
         return renderer
+    }
+
+    this.getPhysics = function(){
+        return physics
     }
 
     Game.instance = this
