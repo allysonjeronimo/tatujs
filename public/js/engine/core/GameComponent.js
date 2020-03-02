@@ -60,8 +60,8 @@ export default class GameComponent {
     // is added to game
     init(game) {
         this.game = game
-        this.renderer = new Renderer(this.game)
-        this.input = new Input(this.game)
+        this.renderer = game.getRenderer()
+        this.input = game.getInput()
     }
 
     update() {

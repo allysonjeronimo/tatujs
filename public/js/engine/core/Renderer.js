@@ -1,7 +1,15 @@
-export default function Renderer(game){
+import DomManager from '../util/DomManager.js'
 
-    if(typeof Renderer.instance === 'object')
+export default function Renderer(settings) {
+
+    if (typeof Renderer.instance === 'object')
         return Renderer.instance
+
+    let canvas
+    let context
+    let dm = new DomManager()
+    let width
+    let height 
 
     Renderer.COLORS = {
         RED: 'red',
@@ -14,21 +22,43 @@ export default function Renderer(game){
 
     Object.freeze(Renderer.COLORS)
 
-    this.clear = function (){
-        game.getContext().clearRect(
-            0, 
-            0, 
-            game.getCanvas().width, 
-            game.getCanvas().height)
+    init()
+
+    function init() {
+        width = settings.width ? settings.width : 800
+        height = settings.height ? settings.height : 600
+        initDOM()
     }
 
-    this.draw = function(component){
-        game.getContext().fillStyle = component.color ? component.color : Renderer.COLORS.DEFAULT
-        game.getContext().fillRect(
-            component.x, 
-            component.y, 
-            component.width, 
+    function initDOM() {
+        dm.create('div', { id: 'content' })
+        canvas = dm.create('canvas', { id: 'content-game', width, height, parent: 'content' })
+        context = canvas.getContext('2d')
+    }
+
+    this.clear = function () {
+        context.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height)
+    }
+
+    this.draw = function (component) {
+        context.fillStyle = component.color ? component.color : Renderer.COLORS.DEFAULT
+        context.fillRect(
+            component.x,
+            component.y,
+            component.width,
             component.height)
+    }
+
+    this.getCanvas = function(){
+        return canvas
+    }
+
+    this.getScreenSize = function(){
+        return {width, height}
     }
 
     Renderer.instance = this

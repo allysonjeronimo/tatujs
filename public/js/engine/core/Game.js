@@ -1,40 +1,35 @@
 
-import DomManager from '../util/DomManager.js'
 import Collection from '../util/Collection.js'
+import Renderer from './Renderer.js'
+import Input from './Input.js'
 
 /**
  * Lib do manager game main features
- * @param {*} width 
- * @param {*} height 
+ * @param {Object} settings {input, renderer}
+ * @param {Object} settings.renderer 
+ * @param {Number} settings.renderer.width 
+ * @param {Number} settings.renderer.height 
+ * @param {Object} settings.input
  */
-export default function Game(width = 480, height = 270) {
+export default function Game(settings = {
+    renderer: { width: 800, height: 600 },
+    input : {}
+    }) {
 
-    if(typeof Game.instance === 'object')
+    if (typeof Game.instance === 'object')
         return Game.instance
 
     // game components to call update and draw
     let components = new Collection()
-    let canvas
-    let context
     let interval
     let frameCount
-    let dm = new DomManager()
+    let renderer = new Renderer(settings.renderer)
+    let input = new Input({ ...settings.input, clientRect: renderer.getCanvas().getBoundingClientRect() })
 
     init()
 
-    function initDOM() {
-        dm.create('div', { id: 'content' })
-        canvas = dm.create('canvas', { id: 'content-game', width, height, parent: 'content' })
-        dm.create('div', { id: 'info-panel', parent: 'content' })
-        dm.create('p', { id: 'component-position', parent: 'info-panel' })
-        context = canvas.getContext('2d')
-    }
-
     function init() {
-        // init general variables
-        initDOM()
-
-        interval = setInterval(updateGame, 20)// 20
+        interval = setInterval(updateGame, 20)
         frameCount = 0
     }
 
@@ -42,7 +37,7 @@ export default function Game(width = 480, height = 270) {
         if (component.collision && components) {
             components.forEach(
                 current => {
-                    if (current.id != component.id && current.collision) {
+                    if (current._id != component._id && current.collision) {
                         console.log('check collision between: ', component, current)
                         component.collisionWith(current)
                     }
@@ -68,8 +63,7 @@ export default function Game(width = 480, height = 270) {
 
     function drawGame() {
 
-        // temp
-        context.clearRect(0, 0, canvas.width, canvas.height)
+        renderer.clear()
 
         components.forEach(
             c => c.draw()
@@ -87,32 +81,21 @@ export default function Game(width = 480, height = 270) {
         return false
     }
 
-    this.showPosition = function(component) {
-        dm.setContent(
-            'component-position',
-            `Position: (${component.x}, ${component.y})`)
-    }
-
-    this.addComponent = function(component) {
+    this.addComponent = function (component) {
         components.add(component)
         component.init(this)
     }
 
-    this.removeComponent = function(component) {
+    this.removeComponent = function (component) {
         components.remove(component)
     }
 
-    // renderer
-    this.getContext = function() {
-        return context
+    this.getInput = function () {
+        return input
     }
 
-    this.getCanvas = function(){
-        return canvas
-    }
-
-    this.getScreenSize = function() {
-        return { width, height }
+    this.getRenderer = function () {
+        return renderer
     }
 
     Game.instance = this

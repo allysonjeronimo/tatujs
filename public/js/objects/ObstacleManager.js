@@ -7,7 +7,7 @@ export default class ObstacleManager extends GameComponent {
     init(game) {
         super.init(game)
         this.interval = 200
-        this.screenSize = this.game.getScreenSize()
+        this.screenSize = this.renderer.getScreenSize()
     }
 
     update() {

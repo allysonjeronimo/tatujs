@@ -1,7 +1,7 @@
 /**
  * Lib to manager user inputs
  */
-export default function Input(game) {
+export default function Input(settings) {
 
     if(typeof Input.instance === 'object')
         return Input.instance
@@ -9,6 +9,7 @@ export default function Input(game) {
     let inputKeys = []
     let mousePosition = {}
     let touchPosition = {}
+    let clientRect = settings.clientRect
 
     Input.KEYS = {
         ARROW_UP: 38,
@@ -107,20 +108,16 @@ export default function Input(game) {
     }
 
     this.getMousePosition = () => {
-        let canvas = game.getCanvas()
-        let rect = canvas.getBoundingClientRect()
         return {
-            x: mousePosition.x - rect.left,
-            y: mousePosition.y - rect.top
+            x: mousePosition.x - clientRect.left,
+            y: mousePosition.y - clientRect.top
         }
     }
 
     this.getTouchPosition = () => {
-        let canvas = game.getCanvas()
-        let rect = canvas.getBoundingClientRect()
         return {
-            x: touchPosition.x - rect.left,
-            y: touchPosition.y - rect.top
+            x: touchPosition.x - clientRect.left,
+            y: touchPosition.y - clientRect.top
         }
     }
 
