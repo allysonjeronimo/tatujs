@@ -17,4 +17,9 @@ export default class Player extends GameComponent {
     onCollision(other) {
         this.color = Colors.RED
     }
+
+    onCollisionEnd(other){
+        this.color = Colors.DEFAULT
+    }
+
 }

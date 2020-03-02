@@ -78,4 +78,12 @@ export default class GameComponent {
     }
 
     onCollision(other){}
+
+    onCollisionStart(other){}
+
+    onCollisionEnd(other){}
+
+    doLater(callback, milliseconds){
+        setTimeout(callback, milliseconds)
+    }
 }

@@ -18,8 +18,7 @@ export default function Game(
         renderer: { width: 800, height: 600 },
         input : {},
         physics: {}
-    }) 
-    {
+    }){
 
     if (typeof Game.instance === 'object')
         return Game.instance
