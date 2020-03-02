@@ -1,16 +1,17 @@
 // https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
-// singleton
-
 export default function MathUtil() {
 
-    function isInteger(value) {
+    if(typeof MathUtil.instance === 'object')
+        return MathUtil.instance
+
+    this.isInteger = function(value) {
         if ((value === undefined) || (value === null)
             || (typeof value != 'number'))
             return false
         return value % 1 == 0
     }
 
-    function isNumber(value) {
+    this.isNumber = function(value) {
         return typeof value === 'number'
     }
 
@@ -21,20 +22,15 @@ export default function MathUtil() {
      * @param {Number} min 
      * @param {Number} max 
      */
-    function random(min, max) {
+    this.random = function(min, max) {
+        if (!this.isNumber(min) || !this.isNumber(max)) return
 
-        if (!isNumber(min) || !isNumber(max)) return
-
-        if (isInteger(min) || isInteger(max))
+        if (this.isInteger(min) || this.isInteger(max))
             return Math.floor(Math.random() * (max - min + 1) + min)
         return Math.random() * (max - min + 1) + min
     }
 
-    return {
-        random,
-        isInteger,
-        isNumber
-    }
+    MathUtil.instance = this
 }
 
 

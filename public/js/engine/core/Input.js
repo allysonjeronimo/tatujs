@@ -1,12 +1,16 @@
 /**
  * Lib to manager user inputs
  */
-export default function InputManager(game) {
+export default function Input(game) {
+
+    if(typeof Input.instance === 'object')
+        return Input.instance
+
     let inputKeys = []
     let mousePosition = {}
     let touchPosition = {}
 
-    const KEYS = {
+    Input.KEYS = {
         ARROW_UP: 38,
         ARROW_RIGHT: 39,
         ARROW_DOWN: 40,
@@ -17,14 +21,14 @@ export default function InputManager(game) {
         A: 65
     }
 
-    const DEVICES = {
+    Input.DEVICES = {
         KEYBOARD: 0,
         MOUSE: 1,
         TOUCH: 2
     }
 
-    Object.freeze(KEYS)
-    Object.freeze(DEVICES)
+    Object.freeze(Input.KEYS)
+    Object.freeze(Input.DEVICES)
 
     const keyDown = (e) => {
         if (inputKeys.indexOf(e.keyCode) === -1) {
@@ -98,11 +102,11 @@ export default function InputManager(game) {
      * The X values can be -1 (left), 0 (none) or 1 (right)
      * The Y values can be -1 (up), 0 (none) or 1 (down)
      */
-    const getAxis = () => {
+    this.getAxis = () => {
         return getKeyboardAxis()
     }
 
-    const getMousePosition = () => {
+    this.getMousePosition = () => {
         let canvas = game.getCanvas()
         let rect = canvas.getBoundingClientRect()
         return {
@@ -111,7 +115,7 @@ export default function InputManager(game) {
         }
     }
 
-    const getTouchPosition = () => {
+    this.getTouchPosition = () => {
         let canvas = game.getCanvas()
         let rect = canvas.getBoundingClientRect()
         return {
@@ -120,13 +124,7 @@ export default function InputManager(game) {
         }
     }
 
-    return {
-        KEYS,
-        DEVICES,
-        getAxis,
-        getMousePosition,
-        getTouchPosition
-    }
+    Input.instance = this
 }
 
 

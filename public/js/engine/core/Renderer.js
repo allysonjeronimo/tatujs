@@ -1,18 +1,20 @@
 export default function Renderer(game){
 
-    let defaultColor = '#8be9fd'
+    if(typeof Renderer.instance === 'object')
+        return Renderer.instance
 
-    const COLORS = {
+    Renderer.COLORS = {
         RED: 'red',
         BLUE: 'blue',
         GREEN: 'green',
         BLACK: 'black',
-        WHITE: 'white'
+        WHITE: 'white',
+        DEFAULT: '#8be9fd'
     }
 
-    Object.freeze(COLORS)
+    Object.freeze(Renderer.COLORS)
 
-    function clear(){
+    this.clear = function (){
         game.getContext().clearRect(
             0, 
             0, 
@@ -20,8 +22,8 @@ export default function Renderer(game){
             game.getCanvas().height)
     }
 
-    function draw(component){
-        game.getContext().fillStyle = component.color ? component.color : defaultColor
+    this.draw = function(component){
+        game.getContext().fillStyle = component.color ? component.color : Renderer.COLORS.DEFAULT
         game.getContext().fillRect(
             component.x, 
             component.y, 
@@ -29,9 +31,7 @@ export default function Renderer(game){
             component.height)
     }
 
-    return {
-        clear,
-        draw,
-        COLORS
-    }
+    Renderer.instance = this
 }
+
+

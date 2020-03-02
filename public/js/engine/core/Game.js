@@ -1,5 +1,5 @@
 
-import DomManager from '../util/dom-manager.js'
+import DomManager from '../util/DomManager.js'
 
 /**
  * Lib do manager game main features
@@ -14,7 +14,7 @@ export default function Game(width = 480, height = 270) {
     let context
     let interval
     let frameCount
-    let dm = DomManager()
+    let dm = new DomManager()
 
     init()
 

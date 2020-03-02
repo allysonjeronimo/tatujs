@@ -1,7 +1,6 @@
 import GameComponent from "../engine/core/GameComponent.js";
 import Obstacle from "./Obstacle.js";
-import MathUtil from '../engine/util/math-util.js'
-import Renderer from "../engine/core/Renderer.js";
+import MathUtil from '../engine/util/MathUtil.js'
 
 export default class ObstacleManager extends GameComponent {
 
@@ -19,7 +18,7 @@ export default class ObstacleManager extends GameComponent {
     spawn() {
         if (this.game.everyInterval(this.interval)) {
 
-            let math = MathUtil()
+            let math = new MathUtil()
             let heights = [30, 60, 90]
             let height = heights[math.random(0,2)]
             let width = 10

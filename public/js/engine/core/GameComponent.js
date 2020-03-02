@@ -1,5 +1,5 @@
 import Renderer from './Renderer.js'
-import InputManager from './InputManager.js'
+import Input from './Input.js'
 
 export default class GameComponent {
 
@@ -66,9 +66,8 @@ export default class GameComponent {
     // is added to game
     init(game) {
         this.game = game
-        // use singleton
-        this.renderer = Renderer(this.game)
-        this.input = InputManager(this.game)
+        this.renderer = new Renderer(this.game)
+        this.input = new Input(this.game)
     }
 
     update() {
