@@ -1,5 +1,6 @@
 
 import DomManager from '../util/DomManager.js'
+import Collection from '../util/Collection.js'
 
 /**
  * Lib do manager game main features
@@ -12,7 +13,7 @@ export default function Game(width = 480, height = 270) {
         return Game.instance
 
     // game components to call update and draw
-    let components = []
+    let components = new Collection()
     let canvas
     let context
     let interval
@@ -59,7 +60,7 @@ export default function Game(width = 480, height = 270) {
         components.forEach(
             c => {
                 c.update(frameCount)
-                processCollisions(c, components)
+                // processCollisions(c, components)
             }
         )
         drawGame()
@@ -93,16 +94,12 @@ export default function Game(width = 480, height = 270) {
     }
 
     this.addComponent = function(component) {
-        // check if exists before add
-        component.id = components.length
+        components.add(component)
         component.init(this)
-        components.push(component)
     }
 
     this.removeComponent = function(component) {
-        if (!component.id) return
-        // view in gamecomponent
-        components.splice(component.id, 1)
+        components.remove(component)
     }
 
     // renderer

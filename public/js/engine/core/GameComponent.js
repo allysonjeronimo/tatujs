@@ -1,5 +1,6 @@
 import Renderer from './Renderer.js'
 import Input from './Input.js'
+import Collection from '../util/Collection.js'
 
 export default class GameComponent {
 
@@ -22,28 +23,21 @@ export default class GameComponent {
             this.color = settings.color
         }
 
-        this.components = {}
-    }
-
-    generateId() {
-        let keys = Object.keys(this.components)
-        let length = keys.length
-        return length == 0 ? 0 : parseInt(keys[length - 1]) + 1
+        this.components = new Collection()
     }
 
     addComponent(component) {
-        component.id = this.generateId()
         component.parent = this
         component.init(this.game)
-        this.components[component.id] = component
+        this.components.add(component)
     }
 
     removeComponent(component) {
-        if (this.parent && component.id === this.id) {
-            delete this.parent.components[component.id]
+        if (this.parent && component._id === this._id) {
+            this.parent.components.remove(component._id)
         }
         else {
-            delete this.components[component.id]
+            this.components.remove(component._id)
         }
     }
 
@@ -71,30 +65,28 @@ export default class GameComponent {
     }
 
     update() {
-        if (Object.keys(this.components).length) {
+        if (this.components.size()) {
             this.updateComponents()
         }
     }
 
     updateComponents() {
-        for (let i in this.components) {
-            this.components[i].update()
-        }
+        this.components.forEach(
+            c => c.update()
+        )
     }
 
     draw() {
-        if (Object.keys(this.components).length) {
+        if (this.components.size())
             this.drawComponents()
-        }
-        else {
+        else
             this.renderer.draw(this)
-        }
     }
 
     drawComponents() {
-        for (let i in this.components) {
-            this.components[i].draw()
-        }
+        this.components.forEach(
+            c => c.draw()
+        )
     }
 
     collisionWith(other) {
@@ -102,7 +94,7 @@ export default class GameComponent {
 
         let thisRectangle = this.getRectangle()
         let otherRectangle = other.getRectangle()
-        
+
         if (thisRectangle.right > otherRectangle.left && thisRectangle.left < otherRectangle.right &&
             thisRectangle.bottom > otherRectangle.top && thisRectangle.top < otherRectangle.bottom) {
             return true
