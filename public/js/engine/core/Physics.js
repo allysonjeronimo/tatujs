@@ -5,10 +5,12 @@ export default function Physics(settings){
 
     this.getRectangle = (gameComponent) => {
 
-        let top = gameComponent.y
-        let right = gameComponent.x + gameComponent.width
-        let bottom = gameComponent.y + gameComponent.height
-        let left = gameComponent.x
+        // center pivot ?
+
+        let top = gameComponent.y - gameComponent.height / 2
+        let right = gameComponent.x + gameComponent.width / 2
+        let bottom = gameComponent.y + gameComponent.height / 2
+        let left = gameComponent.x - gameComponent.width / 2
     
         return {
             top,

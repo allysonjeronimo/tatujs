@@ -35,8 +35,13 @@ export default function Renderer(settings) {
     }
 
     this.draw = function (component) {
+
+        context.save()
+    
         if(component.image){
-            console.log('Image: ', component.image)
+
+            context.scale(component.scaleX, component.scaleY)
+
             context.drawImage(
                 component.image,
                 component.x,
@@ -51,6 +56,8 @@ export default function Renderer(settings) {
                 component.width,
                 component.height)
         }
+
+        context.restore()
     }
 
     /**
@@ -80,8 +87,6 @@ export default function Renderer(settings) {
     this.drawLine = function(pointA, pointB){
 
     }
-
-    
 
     this.getCanvas = function(){
         return canvas

@@ -16,6 +16,7 @@ export default class Player extends SpriteComponent {
 
         this.speed = 2
         this.score = 0
+        this.toRight = true;
 
         this.textScore = new TextComponent(
             { outline: 3, outlineColor: Colors.BLACK, color: Colors.YELLOW }
@@ -40,6 +41,18 @@ export default class Player extends SpriteComponent {
     move() {
         let axis = this.input.getAxis()
         this.x += axis.x ? axis.x * this.speed : 0
+        this.checkFlip(axis)
+    }
+
+    checkFlip(axis){
+        if(axis.x > 0 && !this.toRight){
+            this.setScale({x:1})
+            this.toRight = true
+        }
+        if(axis.x < 0 && this.toRight){
+            this.setScale({x:-1})
+            this.toRight = false
+        }
     }
 
     onCollision(other) {
