@@ -49,8 +49,19 @@ export default function Renderer(settings) {
      */
     this.drawText = function(textValue, component){
         context.font = `${component.size}px ${component.font}`
-        context.fillStyle = component.color ? component.color : Colors.DEFAULT 
+        context.fillStyle = component.color 
+        context.textAlign = component.align
         context.fillText(textValue, component.x, component.y)
+    }
+
+    /**
+     * @param {Number} pointA.x
+     * @param {Number} pointA.y
+     * @param {Number} pointB.x
+     * @param {Number} pointB.y
+     */
+    this.drawLine = function(pointA, pointB){
+
     }
 
     this.getCanvas = function(){

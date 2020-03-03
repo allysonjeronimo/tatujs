@@ -33,7 +33,7 @@ export default class ObstacleManager extends GameComponent {
                 y: this.screenSize.height - height,
                 width: width,
                 height: height,
-                color: Colors.RED,
+                color: Colors.YELLOW,
                 detectCollision: true
             }
 
