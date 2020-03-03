@@ -13,13 +13,21 @@ export default class SpriteComponent extends GameComponent{
      * @param {Boolean} settings.visible
      * @param {Boolean} settings.detectCollision
      * @param {String} settings.image
+     * @param {Number} settings.anchorX (0.0, 0.5 or 1.0)
+     * @param {Number} settings.anchorY (0.0, 0.5 or 1.0)
      */
     constructor(settings){
         super(settings)
 
         this.image = settings.image ? new Image() : ''
+        
+        // to flip/flop effect
         this.scaleX = settings.scaleX || 1
         this.scaleY = settings.scaleY || 1
+
+        // sprites use center anchor point by default
+        // this.anchorX = settings.anchorX || 0.5
+        // this.anchorY = settings.anchorY || 0.5
 
         if(this.image)
             this.image.src = Path.ASSETS + settings.image
@@ -30,14 +38,23 @@ export default class SpriteComponent extends GameComponent{
     }
 
     /**
+     * @param {Object} anchor 
+     * @param {Number} anchor.x 
+     * @param {Number} anchor.y 
+     */
+    setAnchor(anchor){
+        this.anchorX = anchor.x ? anchor.x : this.anchorX
+        this.anchorY = anchor.y ? anchor.y : this.anchorY
+    }
+
+    /**
      * @param {Object} scale 
      * @param {Number} scale.x 
      * @param {Number} scale.y 
      */
     setScale(scale){
-        this.scaleX = scale.x ? scale.x : 1
-        this.scaleY = scale.y ? scale.y : 1
-        console.log('X:' + this.scaleX, 'Y:' + this.scaleY)
+        this.scaleX = scale.x ? scale.x : this.scaleX
+        this.scaleY = scale.y ? scale.y : this.scaleY
     }
 
     flip(){

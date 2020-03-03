@@ -1,69 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flappy Bot JS</title>
-    <!-- <link rel='stylesheet' href='./css/styles.css'> -->
+    <link rel='stylesheet' href='./css/styles.css'>
     <!-- Font Awesome -->
-    <!-- <script src="https://kit.fontawesome.com/e850e67dac.js" crossorigin="anonymous"></script> -->
+    <script src="https://kit.fontawesome.com/e850e67dac.js" crossorigin="anonymous"></script>
     <!-- Google Fonts -->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
-    <p>Image to use:</p>
-    <img id="scream" width="200" height="200" src="img_the_scream.jpg" alt="The Scream">
-
-    <p>Canvas:</p>
-    <canvas id="myCanvas" width="200" height="200" style="border:1px solid #d3d3d3;">
-        Your browser does not support the HTML5 canvas tag.
-    </canvas>
-    <!--
     <div id='header'>
         <i class="fas fa-robot"></i>
         <h1><span id='logo-first'>flappy</span><span id='logo-last'>Bot</span></h1>
     </div>
-    -->
-
-    <!-- <script type='module' src='main.js'></script> -->
-    <script>
-
-        window.onload = function () {
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-            var img = document.getElementById("scream");
-           
-            drawImage(ctx, img, 100, 100, 100, 100, 0, "false")
-        };
-
-        function drawImage(ctx, img, x, y, width, height, deg, flip) {
-            //save current context before applying transformations
-            ctx.save();
-            //convert degrees to radians
-            // if (flip == "true") {
-            //     var rad = deg * Math.PI / 180;
-            // } else {
-            //     var rad = 2 * Math.PI - deg * Math.PI / 180;
-            // }
-            // //set the origin to the center of the image
-            // ctx.translate(x + width / 2, y + height / 2);
-            // //rotate the canvas around the origin
-            // ctx.rotate(rad);
-            // if (flip == "true") {
-            //     //flip the canvas
-            //     ctx.scale(-1, 1);
-            // }
-            //draw the image    
-            ctx.drawImage(img, x - width/2, y - height/2, width, height);
-
-            //restore the canvas
-            ctx.restore();
-        }
-
-    </script>
+    <script type='module' src='main.js'></script>
 </body>
 
 </html>

@@ -17,6 +17,8 @@ export default class Player extends SpriteComponent {
         this.speed = 2
         this.score = 0
         this.toRight = true;
+        this.x = this.renderer.getScreenSize().width / 2
+        this.y = this.renderer.getScreenSize().height / 2
 
         this.textScore = new TextComponent(
             { outline: 3, outlineColor: Colors.BLACK, color: Colors.YELLOW }
@@ -27,6 +29,7 @@ export default class Player extends SpriteComponent {
         super.update()
         this.move()
         this.checkBounds()
+        this.log()
     }
 
     checkBounds() {
@@ -64,6 +67,7 @@ export default class Player extends SpriteComponent {
     draw() {
         super.draw()
         this.textScore.drawText('Score: ' + this.score)
+        this.renderer.drawRect(this.getRectangle())
     }
 
 }

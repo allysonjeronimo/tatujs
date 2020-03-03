@@ -10,7 +10,7 @@ export default function Renderer(settings) {
     let context
     let dm = new DomManager()
     let width
-    let height 
+    let height
 
     init()
 
@@ -37,18 +37,16 @@ export default function Renderer(settings) {
     this.draw = function (component) {
 
         context.save()
-    
-        if(component.image){
 
+        if (component.image) {
             context.scale(component.scaleX, component.scaleY)
-
             context.drawImage(
                 component.image,
                 component.x,
                 component.y,
                 component.width,
                 component.height)
-        }else{
+        } else {
             context.fillStyle = component.color
             context.fillRect(
                 component.x,
@@ -60,16 +58,24 @@ export default function Renderer(settings) {
         context.restore()
     }
 
+    this.drawRect = function (rectangle) {
+        context.beginPath();
+        context.lineWidth = "3";
+        context.strokeStyle = "red";
+        context.rect(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom)
+        context.stroke();
+    }
+
     /**
      * @param {String} textValue A text to draw
      * @param {TextComponent} component A TextComponent with text settings
      */
-    this.drawText = function(textValue, component){
+    this.drawText = function (textValue, component) {
         context.font = `${component.size}px ${component.font}`
-        context.fillStyle = component.color 
+        context.fillStyle = component.color
         context.textAlign = component.align
 
-        if(component.outline){
+        if (component.outline) {
             context.lineWidth = component.outline
             context.strokeStyle = component.outlineColor
             context.strokeText(textValue, component.x, component.y)
@@ -84,16 +90,16 @@ export default function Renderer(settings) {
      * @param {Number} pointB.x
      * @param {Number} pointB.y
      */
-    this.drawLine = function(pointA, pointB){
+    this.drawLine = function (pointA, pointB) {
 
     }
 
-    this.getCanvas = function(){
+    this.getCanvas = function () {
         return canvas
     }
 
-    this.getScreenSize = function(){
-        return {width, height}
+    this.getScreenSize = function () {
+        return { width, height }
     }
 
     Renderer.instance = this
