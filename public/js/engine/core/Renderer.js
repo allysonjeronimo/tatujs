@@ -43,6 +43,16 @@ export default function Renderer(settings) {
             component.height)
     }
 
+    /**
+     * @param {String} textValue A text to draw
+     * @param {TextComponent} component A TextComponent with text settings
+     */
+    this.drawText = function(textValue, component){
+        context.font = `${component.size}px ${component.font}`
+        context.fillStyle = component.color ? component.color : Colors.DEFAULT 
+        context.fillText(textValue, component.x, component.y)
+    }
+
     this.getCanvas = function(){
         return canvas
     }

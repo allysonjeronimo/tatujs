@@ -34,13 +34,20 @@ export default class GameComponent {
         this.components.add(component)
     }
 
+    // doens't works
     removeComponent(component) {
-        if (this.parent && component._id === this._id) {
+        if (this.parent) {
             this.parent.components.remove(component._id)
         }
         else {
             this.components.remove(component._id)
         }
+    }
+
+    // doens't works
+    destroy(){
+        console.log('destroy()')
+        this.removeComponent(this)
     }
 
     // called by game when this component
