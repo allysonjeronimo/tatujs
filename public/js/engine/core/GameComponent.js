@@ -1,6 +1,7 @@
 import Renderer from './Renderer.js'
 import Input from './Input.js'
 import Collection from '../util/Collection.js'
+import Colors from '../util/Colors.js'
 
 export default class GameComponent {
 
@@ -14,40 +15,18 @@ export default class GameComponent {
      * @param {String} settings.color
      * @param {String} settings.tag
      */
-    constructor(settings) {
-        if (settings) {
-            this.x = settings.x
-            this.y = settings.y
-            this.width = settings.width
-            this.height = settings.height
-            this.detectCollision = settings.detectCollision
-            this.color = settings.color
-            this.name = this.constructor.name
-        }
+    constructor(settings = {}) {
+        // default values
+        this.x = settings.x || 0
+        this.y = settings.y || 0
+        this.width = settings.width || 30
+        this.height = settings.height || 30
+        this.visible = settings.visible === false ? false : true
+        this.detectCollision = settings.detectCollision || false
+        this.color = settings.color || Colors.WHITE
+        this.name = this.constructor.name
 
         this.components = new Collection()
-    }
-
-    addComponent(component) {
-        component.parent = this
-        component.init(this.game)
-        this.components.add(component)
-    }
-
-    // doens't works
-    removeComponent(component) {
-        if (this.parent) {
-            this.parent.components.remove(component._id)
-        }
-        else {
-            this.components.remove(component._id)
-        }
-    }
-
-    // doens't works
-    destroy(){
-        console.log('destroy()')
-        this.removeComponent(this)
     }
 
     // called by game when this component
@@ -58,6 +37,27 @@ export default class GameComponent {
         this.input = game.getInput()
         this.physics = game.getPhysics()
     }
+
+
+    addComponent(component) {
+        component.parent = this
+        component.init(this.game)
+        this.components.add(component)
+    }
+
+    removeComponent(component) {
+        if (this.parent && this._id === component._id) {
+            this.parent.components.remove(component)
+        }
+        else {
+            this.components.remove(component)
+        }
+    }
+
+    destroy() {
+        this.removeComponent(this)
+    }
+
 
     update() {
         if (this.components.size()) {
@@ -72,10 +72,13 @@ export default class GameComponent {
     }
 
     draw() {
-        if (this.components.size())
+        if (this.components.size()) {
             this.drawComponents()
-        else
-            this.renderer.draw(this)
+        }
+        else {
+            if (this.visible)
+                this.renderer.draw(this)
+        }
     }
 
     drawComponents() {
@@ -84,13 +87,13 @@ export default class GameComponent {
         )
     }
 
-    onCollision(other){}
+    onCollision(other) { }
 
-    onCollisionStart(other){}
+    onCollisionStart(other) { }
 
-    onCollisionEnd(other){}
+    onCollisionEnd(other) { }
 
-    doLater(callback, milliseconds){
+    doLater(callback, milliseconds) {
         setTimeout(callback, milliseconds)
     }
 }

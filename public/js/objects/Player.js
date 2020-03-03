@@ -9,30 +9,33 @@ export default class Player extends GameComponent {
         this.speed = 2
         this.score = 0
 
-        let textSettings = {
-            x: 10,
-            y: 20, 
-            color: Colors.WHITE, 
-            font: 'Arial', 
-            size: 16
-        }
-
-        this.textScore = new TextComponent(textSettings)
+        this.textScore = new TextComponent()
     }
 
     update() {
         super.update()
+        this.move()
+        this.checkBounds()
+    }
+
+    checkBounds(){
+        let screenWidth = this.renderer.getScreenSize().width
+        
+        if(this.x < 0)
+            this.x = 0
+        if(this.x > screenWidth - this.width)
+            this.x = screenWidth - this.width
+    }
+
+    move(){
         let axis = this.input.getAxis()
         this.x += axis.x ? axis.x * this.speed : 0
     }
 
     onCollision(other) {
-        this.color = Colors.RED
-        //other.destroy() // doesn't works!
+        //this.color = Colors.RED
+        other.destroy()
         this.score++
-        // renderer always clear the canvas before draw
-        // so this text never will be showed
-        // this.textScore.drawText('Score: ' + this.score)
     }
 
     draw(){

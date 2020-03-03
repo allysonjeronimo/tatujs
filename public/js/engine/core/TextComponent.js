@@ -1,7 +1,8 @@
 import Renderer from './Renderer.js'
+import Colors from '../util/Colors.js'
 
-export default class TextComponent{
-    
+export default class TextComponent {
+
     /**
      * @param {Object} settings
      * @param {Number} settings.x
@@ -10,20 +11,28 @@ export default class TextComponent{
      * @param {String} settings.font
      * @param {Number} settings.size
      */
-    constructor(settings){
-        if (settings) {
-            this.x = settings.x
-            this.y = settings.y
-            this.color = settings.color
-            this.font = settings.font
-            this.size = settings.size
-            this.name = this.constructor.name
+    constructor(settings) {
+        // default values
+        settings = {
+            x: 10, 
+            y: 20, 
+            color: Colors.WHITE, 
+            font: 'Arial', 
+            size: 16, 
+            ...settings
         }
+        
+        this.x = settings.x
+        this.y = settings.y
+        this.color = settings.color
+        this.font = settings.font
+        this.size = settings.size
+        this.name = this.constructor.name
 
         this.renderer = new Renderer()
     }
 
-    drawText(text){
+    drawText(text) {
         this.renderer.drawText(text, this)
     }
 }

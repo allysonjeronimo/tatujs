@@ -15,7 +15,7 @@ export default class Obstacle extends GameComponent {
 
     checkToDestroy(){
         if(this.x < 0){
-           this.removeComponent(this)
+           this.destroy()
         }
     }
 }

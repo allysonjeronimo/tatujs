@@ -5,6 +5,10 @@ import Colors from '../engine/util/Colors.js'
 
 export default class ObstacleManager extends GameComponent {
 
+    constructor(settings){
+        super({...settings, visible: false})
+    }
+
     init(game) {
         super.init(game)
         this.interval = 200
@@ -34,9 +38,8 @@ export default class ObstacleManager extends GameComponent {
             }
 
             let obstacle = new Obstacle(settings)
-            super.addComponent(obstacle)
 
-            console.log('Components: ', this.components.size())
+            super.addComponent(obstacle)
         }
     }
 }
