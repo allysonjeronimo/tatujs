@@ -11,9 +11,9 @@ export default class GameComponent {
      * @param {Number} settings.y 
      * @param {Number} settings.width
      * @param {Number} settings.height
+     * @param {Boolean} settings.visible
      * @param {Boolean} settings.detectCollision
      * @param {String} settings.color
-     * @param {String} settings.tag
      */
     constructor(settings = {}) {
         // default values

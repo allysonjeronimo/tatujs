@@ -1,8 +1,8 @@
-import GameComponent from '../engine/core/GameComponent.js'
+import SpriteComponent from '../engine/core/SpriteComponent.js'
 import Colors from '../engine/util/Colors.js'
 import TextComponent from '../engine/core/TextComponent.js'
 
-export default class Player extends GameComponent {
+export default class Player extends SpriteComponent {
 
     constructor(settings) {
         super({
@@ -10,7 +10,8 @@ export default class Player extends GameComponent {
             y: 170,
             width: 30,
             height: 30,
-            detectCollision: true
+            detectCollision: true,
+            image: 'ship.png'
         })
 
         this.speed = 2

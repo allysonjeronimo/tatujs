@@ -35,12 +35,22 @@ export default function Renderer(settings) {
     }
 
     this.draw = function (component) {
-        context.fillStyle = component.color ? component.color : Colors.DEFAULT
-        context.fillRect(
-            component.x,
-            component.y,
-            component.width,
-            component.height)
+        if(component.image){
+            console.log('Image: ', component.image)
+            context.drawImage(
+                component.image,
+                component.x,
+                component.y,
+                component.width,
+                component.height)
+        }else{
+            context.fillStyle = component.color
+            context.fillRect(
+                component.x,
+                component.y,
+                component.width,
+                component.height)
+        }
     }
 
     /**
@@ -59,7 +69,6 @@ export default function Renderer(settings) {
         }
 
         context.fillText(textValue, component.x, component.y)
-        
     }
 
     /**
@@ -71,6 +80,8 @@ export default function Renderer(settings) {
     this.drawLine = function(pointA, pointB){
 
     }
+
+    
 
     this.getCanvas = function(){
         return canvas
