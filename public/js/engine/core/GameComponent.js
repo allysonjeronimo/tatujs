@@ -23,7 +23,7 @@ export default class GameComponent {
         this.height = settings.height || 30
         this.visible = settings.visible === false ? false : true
         this.detectCollision = settings.detectCollision || false
-        this.color = settings.color || Colors.WHITE
+        this.color = settings.color || Colors.DEFAULT
         this.name = this.constructor.name
 
         this.components = new Collection()

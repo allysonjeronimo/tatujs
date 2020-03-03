@@ -5,12 +5,19 @@ import TextComponent from '../engine/core/TextComponent.js'
 export default class Player extends GameComponent {
 
     constructor(settings) {
-        super(settings)
+        super({
+            x: 10,
+            y: 170,
+            width: 30,
+            height: 30,
+            detectCollision: true
+        })
+
         this.speed = 2
         this.score = 0
 
         this.textScore = new TextComponent(
-            {outline: 3, outlineColor: 'black', color: 'yellow'}
+            { outline: 3, outlineColor: Colors.BLACK, color: Colors.YELLOW }
         )
     }
 
@@ -20,16 +27,16 @@ export default class Player extends GameComponent {
         this.checkBounds()
     }
 
-    checkBounds(){
+    checkBounds() {
         let screenWidth = this.renderer.getScreenSize().width
 
-        if(this.x < 0)
+        if (this.x < 0)
             this.x = 0
-        if(this.x > screenWidth - this.width)
+        if (this.x > screenWidth - this.width)
             this.x = screenWidth - this.width
     }
 
-    move(){
+    move() {
         let axis = this.input.getAxis()
         this.x += axis.x ? axis.x * this.speed : 0
     }
@@ -40,7 +47,7 @@ export default class Player extends GameComponent {
         this.score++
     }
 
-    draw(){
+    draw() {
         super.draw()
         this.textScore.drawText('Score: ' + this.score)
     }
