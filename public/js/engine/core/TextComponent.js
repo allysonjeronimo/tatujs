@@ -20,6 +20,8 @@ export default class TextComponent {
             font: 'Arial', 
             size: 16, 
             align: 'left',
+            outline: 0,
+            outlineColor: Colors.BLACK,
             ...settings
         }
         
@@ -29,6 +31,8 @@ export default class TextComponent {
         this.font = settings.font
         this.size = settings.size
         this.align = settings.align
+        this.outline = settings.outline
+        this.outlineColor = settings.outlineColor
         this.name = this.constructor.name
 
         this.renderer = new Renderer()

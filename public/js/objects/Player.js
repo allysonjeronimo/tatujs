@@ -9,7 +9,9 @@ export default class Player extends GameComponent {
         this.speed = 2
         this.score = 0
 
-        this.textScore = new TextComponent()
+        this.textScore = new TextComponent(
+            {outline: 3, outlineColor: 'black', color: 'yellow'}
+        )
     }
 
     update() {
@@ -20,7 +22,7 @@ export default class Player extends GameComponent {
 
     checkBounds(){
         let screenWidth = this.renderer.getScreenSize().width
-        
+
         if(this.x < 0)
             this.x = 0
         if(this.x > screenWidth - this.width)

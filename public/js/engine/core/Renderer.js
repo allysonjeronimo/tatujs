@@ -51,7 +51,15 @@ export default function Renderer(settings) {
         context.font = `${component.size}px ${component.font}`
         context.fillStyle = component.color 
         context.textAlign = component.align
+
+        if(component.outline){
+            context.lineWidth = component.outline
+            context.strokeStyle = component.outlineColor
+            context.strokeText(textValue, component.x, component.y)
+        }
+
         context.fillText(textValue, component.x, component.y)
+        
     }
 
     /**
