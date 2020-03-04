@@ -13,7 +13,17 @@ export default class Background extends GameComponent {
                 height: this.renderer.getScreenSize().height
             }
         )
+
+        this.speed = 0.2
+    }
+
+    update(){
+        this.x -= this.speed
     }
 
     // parallax
+    draw(){
+       // this.renderer.draw()
+       // this.renderer.draw()
+    }
 }

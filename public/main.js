@@ -3,7 +3,7 @@ import Player from './js/objects/Player.js'
 import ObstacleManager from './js/objects/ObstacleManager.js'
 import Background from './js/objects/Background.js'
 
-const game = new Game({renderer:{width:200, height: 200}})
+const game = new Game({renderer:{width:300, height: 200}, debug: true})
 
 // create and add components to game
 const background = new Background()

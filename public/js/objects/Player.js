@@ -10,15 +10,15 @@ export default class Player extends GameComponent {
         super({
             x: 10,
             y: 170,
-            width: 30,
-            height: 30,
+            width: 40,
+            height: 40,
             detectCollision: true
         })
         // init texture
-        this.texture = new Texture(
-            {file: 'ship.png', 
-            width: 30, 
-            height: 30}
+        this.texture = new Texture({
+            file: 'ship.png', 
+            width: 40, 
+            height: 40}
         )
 
         this.speed = 2
@@ -28,7 +28,7 @@ export default class Player extends GameComponent {
         this.y = this.renderer.getScreenSize().height / 2
 
         this.textScore = new Text(
-            { outline: 3, outlineColor: Colors.BLACK, color: Colors.YELLOW }
+            { outline: 4, outlineColor: Colors.BLACK, color: Colors.YELLOW }
         )
     }
 

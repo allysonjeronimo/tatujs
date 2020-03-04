@@ -66,7 +66,6 @@ export default class GameComponent {
         this.removeComponent(this)
     }
 
-
     update() {
         if (this.components.size()) {
             this.updateComponents()
@@ -85,10 +84,11 @@ export default class GameComponent {
         }
         else {
             if (this.visible){
+
                 this.renderer.draw(this)
 
                 if(this.drawRectangle)
-                    this.renderer.drawRect(this)
+                    this.renderer.drawRect(this.getRectangleDebug())
             }
         }
     }
@@ -110,7 +110,6 @@ export default class GameComponent {
     }
 
     getRectangle() {
-
         let top = this.y
         let right = this.x + this.width
         let bottom = this.y + this.height
@@ -124,10 +123,24 @@ export default class GameComponent {
         }
     }
 
+    getRectangleDebug() {
+        let top = this.y
+        let right = this.width
+        let bottom = this.height
+        let left = this.x
+
+        return {
+            top,
+            right,
+            bottom,
+            left
+        }
+    }
+
     log() {
         console.log('x:', this.x, 'y:', this.y)
         console.log('width:', this.width, 'height:', this.height)
-        console.log('anchoX: ', this.anchorX, 'anchorY: ', this.anchorY)
+        console.log('anchorX: ', this.anchorX, 'anchorY: ', this.anchorY)
         console.log('Rectangle: ', this.getRectangle())
     }
 }
