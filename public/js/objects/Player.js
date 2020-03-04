@@ -1,18 +1,25 @@
-import SpriteComponent from '../engine/entity/SpriteComponent.js'
 import Colors from '../engine/util/Colors.js'
 import Text from '../engine/entity/Text.js'
+import Texture from '../engine/entity/Texture.js'
+import GameComponent from '../engine/entity/GameComponent.js'
 
-export default class Player extends SpriteComponent {
+export default class Player extends GameComponent {
 
     constructor(settings) {
+        // init component
         super({
             x: 10,
             y: 170,
             width: 30,
             height: 30,
-            detectCollision: true,
-            image: 'ship.png'
+            detectCollision: true
         })
+        // init texture
+        this.texture = new Texture(
+            {file: 'ship.png', 
+            width: 30, 
+            height: 30}
+        )
 
         this.speed = 2
         this.score = 0
@@ -49,7 +56,7 @@ export default class Player extends SpriteComponent {
         let axis = this.input.getAxis()
         this.x += axis.x ? axis.x * this.speed : 0
         this.y += axis.y ? axis.y * this.speed : 0
-        this.checkFlip(axis)
+        // this.checkFlip(axis)
     }
 
     checkFlip(axis){

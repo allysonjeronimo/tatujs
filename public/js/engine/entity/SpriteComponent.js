@@ -22,12 +22,17 @@ export default class SpriteComponent extends GameComponent {
 
         this.image = settings.image ? new Image() : ''
 
+        if (this.image)
+            this.image.src = Path.ASSETS + settings.image
+
+        // default width and height
+        this.width = settings.width || this.image.width
+        this.height = settings.height || this.image.height
+
         // to flip/flop effect
         this.scaleX = settings.scaleX || 1
         this.scaleY = settings.scaleY || 1
 
-        if (this.image)
-            this.image.src = Path.ASSETS + settings.image
     }
 
     setImage(image) {

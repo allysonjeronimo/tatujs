@@ -39,16 +39,26 @@ export default function Renderer(settings) {
 
         context.save()
 
-        if (component.image) {
+        if (component.texture) {
             // to use scale to flip, it's needed to change
             // the pivot before that
             context.scale(component.scaleX, component.scaleY)
-            context.drawImage(
-                component.image,
-                component.x,
-                component.y,
-                component.width,
-                component.height)
+
+            if (component.texture.width) {
+                context.drawImage(
+                    component.texture.image,
+                    component.x,
+                    component.y,
+                    component.texture.width,
+                    component.texture.height)
+            }
+            else{
+                context.drawImage(
+                    component.texture.image,
+                    component.x,
+                    component.y)   
+            }
+
         } else {
             context.fillStyle = component.color
             context.fillRect(
