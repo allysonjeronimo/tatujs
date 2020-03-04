@@ -18,4 +18,9 @@ export default class Obstacle extends GameComponent {
            this.destroy()
         }
     }
+
+    draw(){
+        super.draw()
+        this.renderer.drawRect(this)
+    }
 }

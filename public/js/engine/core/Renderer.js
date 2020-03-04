@@ -58,11 +58,44 @@ export default function Renderer(settings) {
         context.restore()
     }
 
-    this.drawRect = function (rectangle) {
+    this.drawRect = function (component) {
         context.beginPath();
-        context.lineWidth = "3";
-        context.strokeStyle = "red";
-        context.rect(rectangle.left, rectangle.top, rectangle.right, rectangle.bottom)
+        context.lineWidth = "2";
+        context.strokeStyle = Colors.DEFAULT
+
+        let x
+        let y
+
+        // define x
+
+        if (component.anchorX === 0.0) {
+            x = component.x
+        }
+        else if (component.anchorX === 0.5) {
+            x = component.x - component.width / 2
+        }
+        else if (component.anchoX === 1.0) {
+            x = component.x + component.width
+        }
+
+        // define y
+
+        if (component.anchorY === 0.0) {
+            y = component.y
+        }
+        else if (component.anchorY === 0.5) {
+            y = component.y - component.height / 2
+        }
+        else if (component.anchoY === 1.0) {
+            y = component.y + component.height
+        }
+
+        context.rect(
+            x,
+            y,
+            component.width,
+            component.height)
+
         context.stroke();
     }
 

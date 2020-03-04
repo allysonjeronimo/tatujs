@@ -33,18 +33,24 @@ export default class Player extends SpriteComponent {
     }
 
     checkBounds() {
-        let screenWidth = this.renderer.getScreenSize().width
+        let screenSize = this.renderer.getScreenSize()
 
         if (this.x < 0)
             this.x = 0
-        if (this.x > screenWidth - this.width)
-            this.x = screenWidth - this.width
+        if (this.x > screenSize.width - this.width)
+            this.x = screenSize.width - this.width
+
+        if(this.y < 0)
+            this.y = 0
+        if(this.y > screenSize.height - this.height)
+            this.y = screenSize.height - this.height
     }
 
     move() {
         let axis = this.input.getAxis()
         this.x += axis.x ? axis.x * this.speed : 0
-        this.checkFlip(axis)
+        this.y += axis.y ? axis.y * this.speed : 0
+        // this.checkFlip(axis)
     }
 
     checkFlip(axis){
@@ -59,7 +65,6 @@ export default class Player extends SpriteComponent {
     }
 
     onCollision(other) {
-        //this.color = Colors.RED
         other.destroy()
         this.score++
     }
@@ -67,7 +72,7 @@ export default class Player extends SpriteComponent {
     draw() {
         super.draw()
         this.textScore.drawText('Score: ' + this.score)
-        this.renderer.drawRect(this.getRectangle())
+        this.renderer.drawRect(this)
     }
 
 }
