@@ -23,7 +23,6 @@ export default class Player extends GameComponent {
 
         this.speed = 2
         this.score = 0
-        this.flip = false;
         this.x = this.renderer.getScreenSize().width / 2
         this.y = this.renderer.getScreenSize().height / 2
 
@@ -56,7 +55,7 @@ export default class Player extends GameComponent {
         let axis = this.input.getAxis()
         this.x += axis.x ? axis.x * this.speed : 0
         this.y += axis.y ? axis.y * this.speed : 0
-        this.flip = axis.x >= 0 ? false : true
+        this.texture.setFlip(axis.x < 0)
     }
 
     onCollision(other) {
@@ -65,7 +64,8 @@ export default class Player extends GameComponent {
     }
 
     draw() {
-        this.renderer.drawTexture(this.texture, this.x, this.y, this.flip)
+        super.draw()
+        this.renderer.drawTexture(this.texture, this.x, this.y)
         this.renderer.drawText(this.textScore, 'Score: ' + this.score)
     }
 

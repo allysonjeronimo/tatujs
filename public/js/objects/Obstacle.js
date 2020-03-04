@@ -1,4 +1,5 @@
 import GameComponent from '../engine/entity/GameComponent.js'
+import Colors from '../engine/util/Colors.js'
 
 export default class Obstacle extends GameComponent {
 
@@ -11,6 +12,11 @@ export default class Obstacle extends GameComponent {
         super.update()
         this.x -= this.speed
         this.checkToDestroy()
+    }
+
+    draw(){
+        super.draw()
+        this.renderer.drawRect(this.getRectangleDebug(), Colors.YELLOW)    
     }
 
     checkToDestroy(){

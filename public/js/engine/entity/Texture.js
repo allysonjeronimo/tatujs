@@ -20,34 +20,19 @@ export default class Texture {
         this.width = settings.width  
         this.height = settings.height
 
-        // to flip/flop effect
-        this.scaleX = 1
-        this.scaleY = 1
-
-        // anchor point
-        this.anchorX = 0.0
-        this.anchorY = 0.0
+        this.flip = false
+        this.flop = false
     }
 
     setImage(image) {
         this.image.src = Path.ASSETS + image
     }
 
-    /**
-     * @param {Object} scale 
-     * @param {Number} scale.x 
-     * @param {Number} scale.y 
-     */
-    setScale(scale) {
-        this.scaleX = scale.x ? scale.x : this.scaleX
-        this.scaleY = scale.y ? scale.y : this.scaleY
+    setFlip(flip = false) {
+        this.flip = flip
     }
 
-    flip() {
-        this.scaleX = this.scaleX * -1
-    }
-
-    flop() {
-        this.scaleY = this.scaleY * -1
+    setFlop(flop = false) {
+        this.flop = flop
     }
 }

@@ -35,79 +35,89 @@ export default function Renderer(settings) {
             canvas.height)
     }
 
-    this.draw = function (component) {
+    // this.draw = function (component) {
 
-        context.save()
+    //     context.save()
 
-        if (component.texture) {
-            // to use scale to flip, it's needed to change
-            // the pivot before that
-            context.scale(component.scaleX, component.scaleY)
+    //     if (component.texture) {
+    //         // to use scale to flip, it's needed to change
+    //         // the pivot before that
+    //         context.scale(component.scaleX, component.scaleY)
 
-            if (component.texture.width) {
+    //         if (component.texture.width) {
 
-                context.drawImage(
-                    component.texture.image,
-                    component.x,
-                    component.y,
-                    component.texture.width,
-                    component.texture.height)
-            }
-            else{
-                context.drawImage(
-                    component.texture.image,
-                    component.x,
-                    component.y)   
-            }
+    //             context.drawImage(
+    //                 component.texture.image,
+    //                 component.x,
+    //                 component.y,
+    //                 component.texture.width,
+    //                 component.texture.height)
+    //         }
+    //         else {
+    //             context.drawImage(
+    //                 component.texture.image,
+    //                 component.x,
+    //                 component.y)
+    //         }
 
-        } else {
-            context.fillStyle = component.color
-            context.fillRect(
-                component.x,
-                component.y,
-                component.width,
-                component.height)
-        }
+    //     } else {
+    //         context.fillStyle = component.color
+    //         context.fillRect(
+    //             component.x,
+    //             component.y,
+    //             component.width,
+    //             component.height)
+    //     }
 
-        context.restore()
-    }
+    //     context.restore()
+    // }
 
     /**
      */
-    this.drawTexture = function (texture, x, y, flip = false, flop = false) {
+    this.drawTexture = function (texture, x, y) {
 
         context.save()
-        
+
         // Set the origin to the center of the image
-        context.translate(x + texture.width/2, y + texture.height/2);
+        context.translate(x + texture.width / 2, y + texture.height / 2)
 
         // Flip/flop the canvas
-        
-        let flipScale
-        let flopScale
 
-        if(flip) flipScale = -1; else flipScale = 1;
-        if(flop) flopScale = -1; else flopScale = 1;
-        context.scale(flipScale, flopScale);
-        
+        let flipScale = texture.flip ? -1 : 1
+        let flopScale = texture.flop ? -1 : 1
+
+        context.scale(flipScale, flopScale)
+
         // Draw the image    
-        context.drawImage(texture.image, -texture.width/2, -texture.height/2, texture.width, texture.height);
-        
+        context.drawImage(texture.image, -texture.width / 2, -texture.height / 2, texture.width, texture.height)
+
         context.restore()
     }
 
-    this.drawRect = function (rect, color = Colors.DEFAULT) {
-        context.beginPath();
-        context.lineWidth = "2";
-        context.strokeStyle = color
+    this.drawRect = function (rect, color, outlineColor) {
+        
+        if(color || outlineColor)
+            context.beginPath();
 
-        context.rect(
-            rect.left,
-            rect.top,
-            rect.right,
-            rect.bottom)
+        if (color) {
+            context.fillStyle = color
+            context.fillRect(
+                rect.left,
+                rect.top,
+                rect.right,
+                rect.bottom)
+        }
 
-        context.stroke();
+        if (outlineColor) {
+            context.lineWidth = "2";
+            context.strokeStyle = outlineColor
+            context.rect(
+                rect.left,
+                rect.top,
+                rect.right,
+                rect.bottom)
+            context.stroke();
+        }
     }
 
     /**
