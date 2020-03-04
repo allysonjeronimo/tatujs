@@ -1,7 +1,6 @@
-import GameComponent from "./GameComponent.js";
+import GameComponent from "../entity/GameComponent.js";
 import Path from '../util/Path.js'
 
-// https://stackoverflow.com/questions/3129099/how-to-flip-images-horizontally-with-html5
 export default class SpriteComponent extends GameComponent {
 
     /**

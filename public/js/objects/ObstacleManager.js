@@ -1,4 +1,4 @@
-import GameComponent from "../engine/core/GameComponent.js";
+import GameComponent from "../engine/entity/GameComponent.js";
 import Obstacle from "./Obstacle.js";
 import MathUtil from '../engine/util/MathUtil.js'
 import Colors from '../engine/util/Colors.js'

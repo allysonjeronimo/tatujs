@@ -31,6 +31,7 @@ export default class GameComponent {
         this.name = this.constructor.name
         this.anchorX = settings.anchorX || 0.0
         this.anchorY = settings.anchorY || 0.0
+        this.drawRectangle = false
 
         this.components = new Collection()
 
@@ -43,8 +44,8 @@ export default class GameComponent {
     // is added to game
     init(game) {
         this.game = game
+        this.drawRectangle = this.game.getSettings().debug
     }
-
 
     addComponent(component) {
         component.parent = this
@@ -83,8 +84,12 @@ export default class GameComponent {
             this.drawComponents()
         }
         else {
-            if (this.visible)
+            if (this.visible){
                 this.renderer.draw(this)
+
+                if(this.drawRectangle)
+                    this.renderer.drawRect(this)
+            }
         }
     }
 

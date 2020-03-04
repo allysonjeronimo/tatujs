@@ -1,4 +1,4 @@
-import GameComponent from '../engine/core/GameComponent.js'
+import GameComponent from '../engine/entity/GameComponent.js'
 
 export default class Obstacle extends GameComponent {
 
@@ -19,8 +19,4 @@ export default class Obstacle extends GameComponent {
         }
     }
 
-    draw(){
-        super.draw()
-        this.renderer.drawRect(this)
-    }
 }

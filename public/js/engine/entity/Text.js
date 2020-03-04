@@ -1,7 +1,6 @@
-import Renderer from './Renderer.js'
 import Colors from '../util/Colors.js'
 
-export default class TextComponent {
+export default class Text {
 
     /**
      * @param {Object} settings
@@ -33,12 +32,5 @@ export default class TextComponent {
         this.align = settings.align
         this.outline = settings.outline
         this.outlineColor = settings.outlineColor
-        this.name = this.constructor.name
-
-        this.renderer = new Renderer()
-    }
-
-    drawText(text) {
-        this.renderer.drawText(text, this)
     }
 }

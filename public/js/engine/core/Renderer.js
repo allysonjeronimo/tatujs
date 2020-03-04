@@ -34,6 +34,7 @@ export default function Renderer(settings) {
             canvas.height)
     }
 
+    // https://stackoverflow.com/questions/3129099/how-to-flip-images-horizontally-with-html5
     this.draw = function (component) {
 
         context.save()
@@ -77,10 +78,10 @@ export default function Renderer(settings) {
     }
 
     /**
+     * @param {Text} component A Text component with text settings
      * @param {String} textValue A text to draw
-     * @param {TextComponent} component A TextComponent with text settings
      */
-    this.drawText = function (textValue, component) {
+    this.drawText = function (component, textValue) {
         context.font = `${component.size}px ${component.font}`
         context.fillStyle = component.color
         context.textAlign = component.align

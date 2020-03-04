@@ -17,7 +17,8 @@ export default function Game(
     settings = {
         renderer: { width: 800, height: 600 },
         input : {},
-        physics: {}
+        physics: {},
+        debug: false
     }){
 
     if (typeof Game.instance === 'object')
@@ -30,6 +31,7 @@ export default function Game(
     let renderer = new Renderer(settings.renderer)
     let input = new Input({ ...settings.input, clientRect: renderer.getCanvas().getBoundingClientRect() })
     let physics = new Physics(settings.physics)
+    let debug = settings.debug
 
     init()
 
@@ -109,6 +111,10 @@ export default function Game(
 
     this.getPhysics = function(){
         return physics
+    }
+
+    this.getSettings = function(){
+        return settings
     }
 
     Game.instance = this

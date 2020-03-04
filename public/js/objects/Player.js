@@ -1,6 +1,6 @@
-import SpriteComponent from '../engine/core/SpriteComponent.js'
+import SpriteComponent from '../engine/entity/SpriteComponent.js'
 import Colors from '../engine/util/Colors.js'
-import TextComponent from '../engine/core/TextComponent.js'
+import Text from '../engine/entity/Text.js'
 
 export default class Player extends SpriteComponent {
 
@@ -20,7 +20,7 @@ export default class Player extends SpriteComponent {
         this.x = this.renderer.getScreenSize().width / 2
         this.y = this.renderer.getScreenSize().height / 2
 
-        this.textScore = new TextComponent(
+        this.textScore = new Text(
             { outline: 3, outlineColor: Colors.BLACK, color: Colors.YELLOW }
         )
     }
@@ -29,7 +29,6 @@ export default class Player extends SpriteComponent {
         super.update()
         this.move()
         this.checkBounds()
-        this.log()
     }
 
     checkBounds() {
@@ -71,8 +70,7 @@ export default class Player extends SpriteComponent {
 
     draw() {
         super.draw()
-        this.textScore.drawText('Score: ' + this.score)
-        this.renderer.drawRect(this)
+        this.renderer.drawText(this.textScore, 'Score: ' + this.score)
     }
 
 }
