@@ -7,6 +7,7 @@ import Physics from '../core/Physics.js'
 export default class GameComponent {
 
     /**
+     * A base class for components
      * @param {Object} settings - {x, y, width, height, detectCollision}
      * @param {Number} settings.x
      * @param {Number} settings.y 
@@ -15,8 +16,8 @@ export default class GameComponent {
      * @param {Boolean} settings.visible
      * @param {Boolean} settings.detectCollision
      * @param {String} settings.color
-     * @param {Number} settings.anchorX (0.0, 0.5 or 1.0)
-     * @param {Number} settings.anchorY (0.0, 0.5 or 1.0)
+     * @param {Number} settings.anchorX (0.0, 0.5, 1.0)
+     * @param {Number} settings.anchorY (0.0, 0.5, 1.0)
      */
     constructor(settings = {}) {
         // default values
@@ -105,44 +106,10 @@ export default class GameComponent {
 
     getRectangle() {
 
-        let right
-        let left
-        let top
-        let bottom
-
-        right = this.x + this.width
-        left = this.x
-        top = this.y
-        bottom = this.y + this.height
-
-
-        // define left and right
-        // if (this.anchorX === 0.0) {
-        //     right = this.x + this.width
-        //     left = this.x
-        // }
-        // else if (this.anchorX === 0.5) {
-        //     right = this.x + this.width / 2
-        //     left = this.x - this.width / 2
-        // }
-        // else if (this.anchorX === 1.0) {
-        //     right = this.x
-        //     left = this.x - this.width
-        // }
-
-        // // define top and bottom
-        // if (this.anchorY === 0.0) {
-        //     top = this.y
-        //     bottom = this.y + this.height
-        // }
-        // else if (this.anchorY === 0.5) {
-        //     top = this.y + this.height / 2
-        //     bottom = this.y - this.height / 2
-        // }
-        // else if (this.anchorY === 1.0) {
-        //     top = this.y + this.height
-        //     bottom = this.y
-        // }
+        let top = this.y
+        let right = this.x + this.width
+        let bottom = this.y + this.height
+        let left = this.x
 
         return {
             top,
@@ -153,7 +120,6 @@ export default class GameComponent {
     }
 
     log() {
-        // draw rectangle
         console.log('x:', this.x, 'y:', this.y)
         console.log('width:', this.width, 'height:', this.height)
         console.log('anchoX: ', this.anchorX, 'anchorY: ', this.anchorY)

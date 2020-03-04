@@ -39,6 +39,8 @@ export default function Renderer(settings) {
         context.save()
 
         if (component.image) {
+            // to use scale to flip, it's needed to change
+            // the pivot before that
             context.scale(component.scaleX, component.scaleY)
             context.drawImage(
                 component.image,
@@ -63,36 +65,11 @@ export default function Renderer(settings) {
         context.lineWidth = "2";
         context.strokeStyle = Colors.DEFAULT
 
-        let x
-        let y
-
-        // define x
-
-        if (component.anchorX === 0.0) {
-            x = component.x
-        }
-        else if (component.anchorX === 0.5) {
-            x = component.x - component.width / 2
-        }
-        else if (component.anchoX === 1.0) {
-            x = component.x + component.width
-        }
-
-        // define y
-
-        if (component.anchorY === 0.0) {
-            y = component.y
-        }
-        else if (component.anchorY === 0.5) {
-            y = component.y - component.height / 2
-        }
-        else if (component.anchoY === 1.0) {
-            y = component.y + component.height
-        }
+        let rect = component.getRectangle()
 
         context.rect(
-            x,
-            y,
+            rect.left,
+            rect.top,
             component.width,
             component.height)
 

@@ -50,7 +50,7 @@ export default class Player extends SpriteComponent {
         let axis = this.input.getAxis()
         this.x += axis.x ? axis.x * this.speed : 0
         this.y += axis.y ? axis.y * this.speed : 0
-        // this.checkFlip(axis)
+        this.checkFlip(axis)
     }
 
     checkFlip(axis){
