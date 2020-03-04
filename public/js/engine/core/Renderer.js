@@ -74,34 +74,24 @@ export default function Renderer(settings) {
 
     /**
      */
-    this.drawTexture = function (texture, x, y) {
+    this.drawTexture = function (texture, x, y, flip = false, flop = false) {
 
         context.save()
-
-        // Set rotation point to center of image, instead of top/left
-        // if(center) {
-        //     x -= texture.width/2;
-        //     y -= texture.height/2;
-        // }
         
         // Set the origin to the center of the image
-        // context.translate(x + texture.width/2, y + texture.height/2);
-        
-        // Rotate the canvas around the origin
-        //var rad = 2 * Math.PI - deg * Math.PI / 180;    
-        //context.rotate(rad);
-        
+        context.translate(x + texture.width/2, y + texture.height/2);
+
         // Flip/flop the canvas
         
-        // let flipScale
-        // let flopScale
+        let flipScale
+        let flopScale
 
-        // if(flip) flipScale = -1; else flipScale = 1;
-        // if(flop) flopScale = -1; else flopScale = 1;
-        // context.scale(1, 1);
+        if(flip) flipScale = -1; else flipScale = 1;
+        if(flop) flopScale = -1; else flopScale = 1;
+        context.scale(flipScale, flopScale);
         
         // Draw the image    
-        context.drawImage(texture.image, x, y, texture.width, texture.height);
+        context.drawImage(texture.image, -texture.width/2, -texture.height/2, texture.width, texture.height);
         
         context.restore()
     }

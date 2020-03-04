@@ -85,7 +85,12 @@ export default class GameComponent {
         else {
             if (this.visible){
 
-                this.renderer.draw(this)
+                if(this.texture){
+                    this.renderer.drawTexture(this.texture, this.x, this.y)
+                }
+                else{
+                    this.renderer.draw(this)
+                }
 
                 if(this.drawRectangle)
                     this.renderer.drawRect(this.getRectangleDebug())
