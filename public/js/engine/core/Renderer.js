@@ -19,6 +19,13 @@ export default function Renderer(settings) {
         width = settings.width ? settings.width : 800
         height = settings.height ? settings.height : 600
         initDOM()
+        initStyles()
+    }
+
+    function initStyles(){
+        dm.setStyle('body', {backgroundColor: Colors.DARK_GRAY})
+        dm.setStyle('#content', {textAlign: 'center'})
+        dm.setStyle('#content-game', {backgroundColor: Colors.BLUE})
     }
 
     function initDOM() {
@@ -35,42 +42,6 @@ export default function Renderer(settings) {
             canvas.height)
     }
 
-    // this.draw = function (component) {
-
-    //     context.save()
-
-    //     if (component.texture) {
-    //         // to use scale to flip, it's needed to change
-    //         // the pivot before that
-    //         context.scale(component.scaleX, component.scaleY)
-
-    //         if (component.texture.width) {
-
-    //             context.drawImage(
-    //                 component.texture.image,
-    //                 component.x,
-    //                 component.y,
-    //                 component.texture.width,
-    //                 component.texture.height)
-    //         }
-    //         else {
-    //             context.drawImage(
-    //                 component.texture.image,
-    //                 component.x,
-    //                 component.y)
-    //         }
-
-    //     } else {
-    //         context.fillStyle = component.color
-    //         context.fillRect(
-    //             component.x,
-    //             component.y,
-    //             component.width,
-    //             component.height)
-    //     }
-
-    //     context.restore()
-    // }
 
     /**
      */

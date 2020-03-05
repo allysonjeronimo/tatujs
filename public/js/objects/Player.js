@@ -17,7 +17,7 @@ export default class Player extends GameComponent {
         })
         // init texture
         this.texture = new Texture({
-            file: 'ship.png', 
+            file: 'images/ship.png', 
             width: 40, 
             height: 40}
         )
@@ -31,7 +31,7 @@ export default class Player extends GameComponent {
             { outline: 4, outlineColor: Colors.BLACK, color: Colors.YELLOW }
         )
 
-        this.audio = new Audio({file: 'effect.wav'})
+        this.audio = new Audio({file: 'audio/effect.wav'})
     }
 
     update() {

@@ -10,10 +10,10 @@ const game = new Game({renderer:{width:300, height: 200}, debug: false})
 const background = new Background()
 const player = new Player()
 const obstacleManager = new ObstacleManager()
-const audioBackground = new Audio({file: 'music.mp3'})
+const audioBackground = new Audio({file: 'audio/music.mp3'})
 
 audioBackground.play()
-game.addComponent(background)
+// game.addComponent(background)
 game.addComponent(player)
 game.addComponent(obstacleManager)
 

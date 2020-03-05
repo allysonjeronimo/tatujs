@@ -8,7 +8,7 @@ export default class Background extends GameComponent {
 
         this.texture = new Texture(
             {
-                file: 'back.jpg',
+                file: 'images/back.jpg',
                 width: this.renderer.getScreenSize().width,
                 height: this.renderer.getScreenSize().height
             }
