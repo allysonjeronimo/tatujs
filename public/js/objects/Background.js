@@ -18,17 +18,16 @@ export default class Background extends GameComponent {
         this.startPosition = this.renderer.getScreenSize().width
         this.endPosition = -this.renderer.getScreenSize().width
         
-        this.background1Position = 0.0
-        this.background2Position = this.startPosition    
+        this.x1 = 0.0
+        this.x2 = this.startPosition    
     }
 
     update(){
-        this.background1Position -= this.speed
-        this.background2Position -= this.speed
+        this.x1 -= this.speed
+        this.x2 -= this.speed
 
-        this.background1Position = this.checkPosition(this.background1Position)
-        this.background2Position = this.checkPosition(this.background2Position)
-
+        this.x1 = this.checkPosition(this.x1)
+        this.x2 = this.checkPosition(this.x2)
     }
 
     checkPosition(x){
@@ -39,7 +38,7 @@ export default class Background extends GameComponent {
     }
 
     draw(){
-        this.renderer.drawTexture(this.texture, this.background1Position, 0)
-        this.renderer.drawTexture(this.texture, this.background2Position, 0)
+        this.renderer.drawTexture(this.texture, this.x1, 0)
+        this.renderer.drawTexture(this.texture, this.x2, 0)
     }
 }

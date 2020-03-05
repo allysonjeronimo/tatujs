@@ -2,6 +2,7 @@ import Colors from '../engine/util/Colors.js'
 import Text from '../engine/entity/Text.js'
 import Texture from '../engine/entity/Texture.js'
 import GameComponent from '../engine/entity/GameComponent.js'
+import Audio from '../engine/entity/Audio.js'
 
 export default class Player extends GameComponent {
 
@@ -29,6 +30,8 @@ export default class Player extends GameComponent {
         this.textScore = new Text(
             { outline: 4, outlineColor: Colors.BLACK, color: Colors.YELLOW }
         )
+
+        this.audio = new Audio({file: 'effect.wav'})
     }
 
     update() {
@@ -61,6 +64,7 @@ export default class Player extends GameComponent {
     onCollision(other) {
         other.destroy()
         this.score++
+        this.audio.play()
     }
 
     draw() {
