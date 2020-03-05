@@ -1,3 +1,4 @@
+// Draw Neon Lines: https://codepen.io/agar3s/pen/pJpoya
 export default function DomManager() {
 
     if (typeof DomManager.instance === 'object')
