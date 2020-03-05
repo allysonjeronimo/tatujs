@@ -1,5 +1,5 @@
 const paths = {
-    ASSETS: './js/assets/'
+    ASSETS: './game/assets/'
 }
 
 export default {
