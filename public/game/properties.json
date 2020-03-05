@@ -1,0 +1,9 @@
+{
+    "project-name": "game",
+    "paths": {
+        "assets": "/assets",
+        "audio": "/audio",
+        "images": "/images",
+        "fonts": "/fonts"
+    }
+}
