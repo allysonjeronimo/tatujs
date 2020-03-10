@@ -16,7 +16,7 @@ export default class Obstacle extends GameComponent {
 
     draw(){
         super.draw()
-        this.renderer.drawRect(this.getRectangleDebug(), Colors.DEFAULT)    
+        this.renderer.drawRect(this.getRectangle(), Colors.DEFAULT)    
     }
 
     checkToDestroy(){

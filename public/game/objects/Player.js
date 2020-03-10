@@ -9,8 +9,6 @@ export default class Player extends GameComponent {
     constructor(settings) {
         // init component
         super({
-            x: 10,
-            y: 170,
             width: 40,
             height: 40,
             detectCollision: true

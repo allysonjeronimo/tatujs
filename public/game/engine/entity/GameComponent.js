@@ -16,8 +16,6 @@ export default class GameComponent {
      * @param {Boolean} settings.visible
      * @param {Boolean} settings.detectCollision
      * @param {String} settings.color
-     * @param {Number} settings.anchorX (0.0, 0.5, 1.0)
-     * @param {Number} settings.anchorY (0.0, 0.5, 1.0)
      */
     constructor(settings = {}) {
         // default values
@@ -84,8 +82,9 @@ export default class GameComponent {
         }
         else {
             if (this.visible){
-                if(this.drawRectangle)
-                    this.renderer.drawRect(this.getRectangleDebug(), false, Colors.DEFAULT)
+                if(this.drawRectangle){
+                    this.renderer.drawRect(this.getRectangle(), false, Colors.DEFAULT)
+                }      
             }
         }
     }
@@ -106,24 +105,17 @@ export default class GameComponent {
         setTimeout(callback, milliseconds)
     }
 
-    getRectangle() {
+    /**
+     * Get the current rectangle from the game component.
+     * Can used to check collision or render component on screen.
+     * @param {*} toCollision By default is false
+     */
+    getRectangle(toCollision = false) {
+        // To check collision it's needed a "absolute rectangle" with abslute positions
+        // To render it's need positions, with and height. 
         let top = this.y
-        let right = this.x + this.width
-        let bottom = this.y + this.height
-        let left = this.x
-
-        return {
-            top,
-            right,
-            bottom,
-            left
-        }
-    }
-
-    getRectangleDebug() {
-        let top = this.y
-        let right = this.width
-        let bottom = this.height
+        let right = toCollision ? this.x + this.width : this.width
+        let bottom = toCollision? this.y + this.height : this.height
         let left = this.x
 
         return {
