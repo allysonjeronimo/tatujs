@@ -1,7 +1,7 @@
 import Texture from "../engine/entity/Texture.js";
-import GameComponent from '../engine/entity/GameComponent.js'
+import GameObject from '../engine/entity/GameObject.js'
 
-export default class Background extends GameComponent {
+export default class Background extends GameObject {
 
     constructor(settings) {
         super(settings)

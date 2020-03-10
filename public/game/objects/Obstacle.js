@@ -1,7 +1,7 @@
-import GameComponent from '../engine/entity/GameComponent.js'
+import GameObject from '../engine/entity/GameObject.js'
 import Colors from '../engine/util/Colors.js'
 
-export default class Obstacle extends GameComponent {
+export default class Obstacle extends GameObject {
 
     constructor(settings) {
         super(settings)

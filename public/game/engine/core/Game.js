@@ -24,8 +24,8 @@ export default function Game(
     if (typeof Game.instance === 'object')
         return Game.instance
 
-    // game components to call update and draw
-    let components = new Collection()
+    // game objects to call update and draw
+    let children = new Collection()
     let interval
     let frameCount
     let renderer = new Renderer(settings.renderer)
@@ -40,20 +40,20 @@ export default function Game(
         frameCount = 0
     }
 
-    function processCollisions(component, components) {
-        // if components is a collision object
-        // components (exactly the specific components that was registered to collided with component)
-        if (component.detectCollision && components) {
-            components.forEach(
-                current => {
+    function processCollisions(currentGameObject, children) {
+        // if children is a collision object
+        // children (exactly the specific children that was registered to collided with component)
+        if (currentGameObject.detectCollision && children) {
+            children.forEach(
+                currentOther => {
                     // TIP: check collision just with objects that can move
-                    if (component._id != current._id && physics.checkCollision(component, current)) {
-                        // notify component
-                        component.onCollision(current)
+                    if (currentGameObject._id != currentOther._id && physics.checkCollision(currentGameObject, currentOther)) {
+                        // notify game object
+                        currentGameObject.onCollision(currentOther)
                     }
                     // has children
-                    if (current.components.size()) {
-                        processCollisions(component, current.components)
+                    if (currentOther.children.size()) {
+                        processCollisions(currentGameObject, currentOther.children)
                     }
                 }
             )
@@ -62,11 +62,11 @@ export default function Game(
 
     function updateGame() {
         frameCount++
-        components.forEach(
-            c => {
-                c.update(frameCount)
+        children.forEach(
+            currentGameObject => {
+                currentGameObject.update(frameCount)
                 // restrict targets (by some data structure based on collision matrix)
-                processCollisions(c, components)
+                processCollisions(currentGameObject, children)
             }
         )
         drawGame()
@@ -76,8 +76,8 @@ export default function Game(
 
         renderer.clear()
 
-        components.forEach(
-            c => c.draw()
+        children.forEach(
+            currentGameObject => currentGameObject.draw()
         )
     }
 
@@ -92,13 +92,13 @@ export default function Game(
         return false
     }
 
-    this.addComponent = function (component) {
-        components.add(component)
-        component.init(this)
+    this.addChild = function (gameObject) {
+        children.add(gameObject)
+        gameObject.init(this)
     }
 
-    this.removeComponent = function (component) {
-        components.remove(component)
+    this.removeChild = function (gameObject) {
+        children.remove(gameObject)
     }
 
     this.getInput = function () {

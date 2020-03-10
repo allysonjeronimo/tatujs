@@ -1,10 +1,10 @@
 import Colors from '../engine/util/Colors.js'
 import Text from '../engine/entity/Text.js'
 import Texture from '../engine/entity/Texture.js'
-import GameComponent from '../engine/entity/GameComponent.js'
+import GameObject from '../engine/entity/GameObject.js'
 import Audio from '../engine/entity/Audio.js'
 
-export default class Player extends GameComponent {
+export default class Player extends GameObject {
 
     constructor(settings) {
         // init component

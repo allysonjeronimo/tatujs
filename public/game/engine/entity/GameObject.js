@@ -4,10 +4,10 @@ import Renderer from '../core/Renderer.js'
 import Input from '../core/Input.js'
 import Physics from '../core/Physics.js'
 
-export default class GameComponent {
+export default class GameObject {
 
     /**
-     * A base class for components
+     * A base class for children
      * @param {Object} settings - {x, y, width, height, detectCollision}
      * @param {Number} settings.x
      * @param {Number} settings.y 
@@ -27,11 +27,9 @@ export default class GameComponent {
         this.detectCollision = settings.detectCollision || false
         this.color = settings.color || Colors.DEFAULT
         this.name = this.constructor.name
-        this.anchorX = settings.anchorX || 0.0
-        this.anchorY = settings.anchorY || 0.0
         this.drawRectangle = false
 
-        this.components = new Collection()
+        this.children = new Collection()
 
         this.renderer = new Renderer()
         this.input = new Input()
@@ -45,40 +43,40 @@ export default class GameComponent {
         this.drawRectangle = this.game.getSettings().debug
     }
 
-    addComponent(component) {
-        component.parent = this
-        component.init(this.game)
-        this.components.add(component)
+    addChild(gameObject) {
+        gameObject.parent = this
+        gameObject.init(this.game)
+        this.children.add(gameObject)
     }
 
-    removeComponent(component) {
-        if (this.parent && this._id === component._id) {
-            this.parent.components.remove(component)
+    removeChild(gameObject) {
+        if (this.parent && this._id === gameObject._id) {
+            this.parent.children.remove(gameObject)
         }
         else {
-            this.components.remove(component)
+            this.children.remove(gameObject)
         }
     }
 
     destroy() {
-        this.removeComponent(this)
+        this.removeChild(this)
     }
 
     update() {
-        if (this.components.size()) {
-            this.updateComponents()
+        if (this.children.size()) {
+            this.updatechildren()
         }
     }
 
-    updateComponents() {
-        this.components.forEach(
+    updateChildren() {
+        this.children.forEach(
             c => c.update()
         )
     }
 
     draw() {
-        if (this.components.size()) {
-            this.drawComponents()
+        if (this.children.size()) {
+            this.drawChildren()
         }
         else {
             if (this.visible){
@@ -89,8 +87,8 @@ export default class GameComponent {
         }
     }
 
-    drawComponents() {
-        this.components.forEach(
+    drawChildren() {
+        this.children.forEach(
             c => c.draw()
         )
     }

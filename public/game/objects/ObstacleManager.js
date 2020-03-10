@@ -1,8 +1,8 @@
-import GameComponent from "../engine/entity/GameComponent.js";
+import GameObject from "../engine/entity/GameObject.js";
 import Obstacle from "./Obstacle.js";
 import MathUtil from '../engine/util/MathUtil.js'
 
-export default class ObstacleManager extends GameComponent {
+export default class ObstacleManager extends GameObject {
 
     constructor(settings){
         super({...settings, visible: false})
@@ -37,7 +37,7 @@ export default class ObstacleManager extends GameComponent {
 
             let obstacle = new Obstacle(settings)
 
-            super.addComponent(obstacle)
+            super.addChild(obstacle)
         }
     }
 }
