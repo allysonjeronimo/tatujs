@@ -13,9 +13,9 @@ const obstacleManager = new ObstacleManager()
 const audioBackground = new Audio({file: 'audio/music.mp3'})
 
 audioBackground.play()
-game.addComponent(background)
-game.addComponent(player)
-game.addComponent(obstacleManager)
+game.addChild(background)
+game.addChild(player)
+game.addChild(obstacleManager)
 
 
 

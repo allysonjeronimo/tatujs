@@ -64,7 +64,7 @@ export default class GameObject {
 
     update() {
         if (this.children.size()) {
-            this.updatechildren()
+            this.updateChildren()
         }
     }
 
