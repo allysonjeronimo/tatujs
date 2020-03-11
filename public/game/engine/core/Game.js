@@ -92,12 +92,12 @@ export default function Game(
         return false
     }
 
-    this.addChild = function (gameObject) {
+    this.addObject = function (gameObject) {
         children.add(gameObject)
         gameObject.init(this)
     }
 
-    this.removeChild = function (gameObject) {
+    this.removeObject = function (gameObject) {
         children.remove(gameObject)
     }
 
