@@ -1,5 +1,5 @@
-import GameObject from '../engine/entity/GameObject.js'
-import Colors from '../engine/util/Colors.js'
+import GameObject from '../../engine/entity/GameObject.js'
+import Colors from '../../engine/util/Colors.js'
 
 export default class Obstacle extends GameObject {
 

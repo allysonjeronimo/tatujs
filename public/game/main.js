@@ -1,8 +1,9 @@
-import Game from './engine/core/Game.js'
-import Audio from './engine/entity/Audio.js'
+import Game from '../engine/core/Game.js'
+import Audio from '../engine/entity/Audio.js'
 import Player from './objects/Player.js'
 import ObstacleManager from './objects/ObstacleManager.js'
 import Background from './objects/Background.js'
+import TestBodyComponent from './objects/TestBodyComponent.js'
 
 const game = new Game({renderer:{width:300, height: 200}, debug: true})
 
@@ -16,6 +17,9 @@ audioBackground.play()
 game.addObject(background)
 game.addObject(player)
 game.addObject(obstacleManager)
+
+const testBody = new TestBodyComponent()
+
 
 
 

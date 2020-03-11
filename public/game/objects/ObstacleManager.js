@@ -1,6 +1,6 @@
-import GameObject from "../engine/entity/GameObject.js";
+import GameObject from "../../engine/entity/GameObject.js";
+import MathUtil from '../../engine/util/MathUtil.js'
 import Obstacle from "./Obstacle.js";
-import MathUtil from '../engine/util/MathUtil.js'
 
 export default class ObstacleManager extends GameObject {
 

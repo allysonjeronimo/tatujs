@@ -1,8 +1,8 @@
-import Colors from '../engine/util/Colors.js'
-import Text from '../engine/entity/Text.js'
-import Texture from '../engine/entity/Texture.js'
-import GameObject from '../engine/entity/GameObject.js'
-import Audio from '../engine/entity/Audio.js'
+import Colors from '../../engine/util/Colors.js'
+import Text from '../../engine/entity/Text.js'
+import Texture from '../../engine/entity/Texture.js'
+import GameObject from '../../engine/entity/GameObject.js'
+import Audio from '../../engine/entity/Audio.js'
 
 export default class Player extends GameObject {
 

@@ -1,5 +1,5 @@
-import Texture from "../engine/entity/Texture.js";
-import GameObject from '../engine/entity/GameObject.js'
+import Texture from "../../engine/entity/Texture.js";
+import GameObject from '../../engine/entity/GameObject.js'
 
 export default class Background extends GameObject {
 
