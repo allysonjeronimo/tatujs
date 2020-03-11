@@ -7,6 +7,8 @@ export default class Body extends Component{
         this.validate(settings)
         this.width = settings.width
         this.height = settings.height 
+        this.gravity = settings.gravity || 0.05
+        this.gravitySpeed = settings.gravitySpeed || 0
     }
 
     validate(settings){
@@ -22,6 +24,11 @@ export default class Body extends Component{
             bottom: this.parent.y + this.height,
             right: this.parent.x
         }
+    }
+
+    execute(){
+        super.execute()
+        // transform position
     }
     
 }

@@ -17,5 +17,7 @@ export default class Component{
         this.parent = settings.parent
         this.active = true
     }
-    
+
+    execute(){}
+
 }
