@@ -29,7 +29,7 @@ function Validator() {
             throw new Error(`${settings.name} is required! `)
         }
         if (settings.type && getClass(settings.type) === 'String') {
-            throw new Error(`Value of settings.type must be a String!`)
+            throw new Error(`Value of settings.type must be a String! and not ${typeof settings.type}`)
         }
         if (settings.type && !settings.value instanceof settings.type) {
             throw new Error(`${settings.name} must be a ${settings.type} instance! `)
@@ -49,15 +49,15 @@ const validator = new Validator()
 
 let x = 10
 
-// validator.validate(
-//     {
-//         type: "Boolean",
-//         name: 'x',
-//         value: x,
-//         required: true
-//     })
+validator.validate(
+    {
+        type: 'Boolean',
+        name: 'x',
+        value: x,
+        required: true
+    })
 
-let type = 'Boolean'
-console.log(type && validator.getClass(type) === 'String')
+// let type = 'Boolean'
+// console.log(type && validator.getClass(type) === 'String')
 
 
