@@ -33,6 +33,10 @@ export default function Collection() {
         return items
     }
 
+    this.toArray = function(){
+        return Object.values(items)
+    }
+    
     this.forEach = function(callBack){
         Object.values(items).forEach(callBack)
     }

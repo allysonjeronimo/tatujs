@@ -3,6 +3,7 @@ import Colors from '../util/Colors.js'
 import Renderer from '../core/Renderer.js'
 import Input from '../core/Input.js'
 import Physics from '../core/Physics.js'
+import Transform from './Transform.js'
 
 export default class GameObject {
 
@@ -35,6 +36,10 @@ export default class GameObject {
         this.renderer = new Renderer()
         this.input = new Input()
         this.physics = new Physics()
+
+        // default component
+        this.transform = new Transform()
+        this.addComponent(this.transform)
     }
 
     // called by game when this component
@@ -57,6 +62,24 @@ export default class GameObject {
         else {
             this.children.remove(gameObject)
         }
+    }
+
+    addComponent(component){
+        if(!this.getComponent(component.type)){
+            component.setParent(this)
+            this.components.add(component)
+        }
+        else{
+            throw new Error(`Component ${component.type} is already exists!`)
+        }
+    }
+
+    removeComponent(component){
+        this.components.remove(component)
+    }
+
+    getComponent(type){
+        return this.components.toArray.find(component => component.type === type)
     }
 
     destroy() {

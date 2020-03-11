@@ -22,42 +22,37 @@ function Validator() {
      * @param {Object.String} settings.type
      * @param {Object.*} settings.value
      * @param {Object.String} settings.name
-     * @param {Object.boolean} settings.required
+     * @param {Object.Boolean} settings.required
      */
     function validate(settings) {
         if (settings.required && !settings.value) {
             throw new Error(`${settings.name} is required! `)
         }
-        if (settings.type && getClass(settings.type) === 'String') {
+        if (settings.type && getClass(settings.type) != 'String') {
             throw new Error(`Value of settings.type must be a String!`)
         }
-        if (settings.type && !settings.value instanceof settings.type) {
-            throw new Error(`${settings.name} must be a ${settings.type} instance! `)
+        if (settings.type && getClass(settings.value) != settings.type) {
+            throw new Error(`${settings.name} must be a ${settings.type} but is a ${getClass(settings.value)}!  `)
         }
-        console.log('ok!')
     }
 
     Validator.instance = this
 
     return {
-        validate,
-        getClass
+        validate
     }
 }
 
-const validator = new Validator()
+// return Object.keys({someVar}[0])
 
-let x = 10
+let validator = new Validator()
 
-// validator.validate(
-//     {
-//         type: "Boolean",
-//         name: 'x',
-//         value: x,
-//         required: true
-//     })
+class GameObject{
 
-let type = 'Boolean'
-console.log(type && validator.getClass(type) === 'String')
+}
+
+validator.validate({type: 'GameObject', name: 'settings.parent', value: new GameObject(), required: true})
+
+
 
 

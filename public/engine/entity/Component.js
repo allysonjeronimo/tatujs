@@ -1,21 +1,21 @@
+import TypeUtil from '../util/TypeUtil.js'
+
 export default class Component{
     
-    /**
-     * @param {Object} settings
-     * @param {GameObject} settings.parent
-     */
-    constructor(settings){
-        // validations
-        
-        if(!settings){
-            throw new Error('Settings is required! (settings = {})')
-        }
-        if(!settings.parent){
-            throw new Error('A parent GameObject is required! (settings.parent)')
-        }
-
-        this.parent = settings.parent
+    constructor(){
         this.active = true
+        this.type = TypeUtil.getTypeName(this)
+        this.parent = null
+        this.transform = null
+    }
+
+    setParent(gameObject){
+        this.parent = gameObject
+        this.transform = this.parent.transform
+    }
+
+    getParent(){
+        return this.parent
     }
 
     update(){
