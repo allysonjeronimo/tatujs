@@ -30,6 +30,7 @@ export default class GameObject {
         this.drawRectangle = false
 
         this.children = new Collection()
+        this.components = new Collection()
 
         this.renderer = new Renderer()
         this.input = new Input()

@@ -7,6 +7,8 @@ export default class Body extends Component{
         this.validate(settings)
         this.width = settings.width
         this.height = settings.height 
+        this.kinematic = settings.kinematic || false // not affected by physics when is true (gravity)
+        this.detectCollision = settings.detectCollision || true
         this.gravity = settings.gravity || 0.05
         this.gravitySpeed = settings.gravitySpeed || 0
     }
@@ -20,15 +22,19 @@ export default class Body extends Component{
     getBounds(){
         return {
             top: this.parent.y,
-            left: this.parent.x + this.width,
+            left: this.parent.x + this.width, // 
             bottom: this.parent.y + this.height,
             right: this.parent.x
         }
     }
 
-    execute(){
-        super.execute()
-        // transform position
+    update(){
+        super.update()
+        // process physics
+    }
+
+    process(){
+        
     }
     
 }

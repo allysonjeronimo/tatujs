@@ -18,6 +18,7 @@ export default class Component{
         this.active = true
     }
 
-    execute(){}
+    update(){
 
+    }
 }
