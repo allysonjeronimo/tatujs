@@ -8,7 +8,7 @@ export default class Body extends Component{
      * @param {Number} settings.height
      */
     constructor(settings){
-        super()
+        super({hasUpdate: true})
         this.validate(settings)
         // width and height are used to check collisions
         this.width = settings.width
@@ -28,18 +28,14 @@ export default class Body extends Component{
     getBounds(){
         return {
             top: this.transform.y,
-            left: this.transform.x + this.width, // 
+            left: this.transform.x + this.width, 
             bottom: this.transform.y + this.height,
             right: this.transform.x
         }
     }
 
     update(){
-        super.update()
-    }
-
-    process(){
-        
+        // update transform gravity 
     }
     
 }
