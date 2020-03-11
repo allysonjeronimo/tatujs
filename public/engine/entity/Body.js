@@ -2,9 +2,15 @@ import Component from './Component.js'
 
 export default class Body extends Component{
 
+    /**
+     * @param {Object} settings 
+     * @param {Number} settings.width
+     * @param {Number} settings.height
+     */
     constructor(settings){
-        super(settings)
+        super({hasUpdate: true})
         this.validate(settings)
+        // width and height are used to check collisions
         this.width = settings.width
         this.height = settings.height 
         this.kinematic = settings.kinematic || false // not affected by physics when is true (gravity)
@@ -21,20 +27,15 @@ export default class Body extends Component{
 
     getBounds(){
         return {
-            top: this.parent.y,
-            left: this.parent.x + this.width, // 
-            bottom: this.parent.y + this.height,
-            right: this.parent.x
+            top: this.transform.y,
+            left: this.transform.x + this.width, 
+            bottom: this.transform.y + this.height,
+            right: this.transform.x
         }
     }
 
     update(){
-        super.update()
-        // process physics
-    }
-
-    process(){
-        
+        // update transform gravity 
     }
     
 }

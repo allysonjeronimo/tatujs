@@ -1,24 +1,27 @@
+import TypeUtil from '../util/TypeUtil.js'
+
 export default class Component{
     
     /**
-     * @param {Object} settings
-     * @param {GameObject} settings.parent
+     * @param {Object} settings 
+     * @param {Boolean} settings.update
+     * @param {Boolean} settings.draw
      */
     constructor(settings){
-        // validations
-        
-        if(!settings){
-            throw new Error('Settings is required! (settings = {})')
-        }
-        if(!settings.parent){
-            throw new Error('A parent GameObject is required! (settings.parent)')
-        }
-
-        this.parent = settings.parent
+        this.update = settings.update || false // the component must has a update function
+        this.draw = settings.draw || false // the component must has a draw function
         this.active = true
+        this.type = TypeUtil.getTypeName(this)
+        this.parent = null
+        this.transform = null
     }
 
-    update(){
+    setParent(gameObject){
+        this.parent = gameObject
+        this.transform = this.parent.transform
+    }
 
+    getParent(){
+        return this.parent
     }
 }

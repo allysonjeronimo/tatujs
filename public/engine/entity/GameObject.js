@@ -3,31 +3,19 @@ import Colors from '../util/Colors.js'
 import Renderer from '../core/Renderer.js'
 import Input from '../core/Input.js'
 import Physics from '../core/Physics.js'
+import Transform from './Transform.js'
 
 export default class GameObject {
 
     /**
-     * A base class for children
-     * @param {Object} settings - {x, y, width, height, detectCollision}
-     * @param {Number} settings.x
-     * @param {Number} settings.y 
-     * @param {Number} settings.width
-     * @param {Number} settings.height
-     * @param {Boolean} settings.visible
-     * @param {Boolean} settings.detectCollision
-     * @param {String} settings.color
-     */
-    constructor(settings = {}) {
-        // default values
-        this.x = settings.x || 0
-        this.y = settings.y || 0
-        this.width = settings.width || 30
-        this.height = settings.height || 30
-        this.visible = settings.visible === false ? false : true
-        this.detectCollision = settings.detectCollision || false
-        this.color = settings.color || Colors.DEFAULT
+     * A base class for GameObject
+     * @param {Array} components
+     * 
+     **/
+    constructor(components) {
+
+        this.active = true
         this.name = this.constructor.name
-        this.drawRectangle = false
 
         this.children = new Collection()
         this.components = new Collection()
@@ -35,13 +23,28 @@ export default class GameObject {
         this.renderer = new Renderer()
         this.input = new Input()
         this.physics = new Physics()
+
+        this.initComponents(components)
+    }
+
+    initComponents(components){
+
+        // default component
+        this.transform = new Transform()
+        this.addComponent(this.transform)
+
+        if(components){
+            components.forEach(
+                component => this.addComponent(component)
+            )
+        }
     }
 
     // called by game when this component
     // is added to game
     init(game) {
         this.game = game
-        this.drawRectangle = this.game.getSettings().debug
+        this.debug = this.game.getSettings().debug
     }
 
     addChild(gameObject) {
@@ -59,19 +62,60 @@ export default class GameObject {
         }
     }
 
+    addComponent(component){
+        if(!this.getComponent(component.type)){
+            component.setParent(this)
+            this.components.add(component)
+        }
+        else{
+            throw new Error(`Component ${component.type} is already exists!`)
+        }
+    }
+
+    removeComponent(component){
+        this.components.remove(component)
+    }
+
+    getComponent(type){
+        return this.components.toArray.find(component => component.type === type)
+    }
+
     destroy() {
         this.removeChild(this)
     }
 
     update() {
+        
+        this.updateComponents()
+
         if (this.children.size()) {
             this.updateChildren()
         }
     }
 
+    updateComponents(){
+        // categorize components between (hasUpdate and hasDraw)
+        if(this.components.size()){
+            this.components.forEach(
+                component => {
+                    if(component.active && component.hasUpdate){
+                        try{
+                            component.update()
+                        }catch(e){
+                            console.log('Error: ' + e.message)
+                            throw new Error(`Component ${component._id} doens't have a update method!`)
+                        } 
+                    }   
+                }
+            )
+        }
+    }
+
     updateChildren() {
         this.children.forEach(
-            c => c.update()
+            c => {
+                c.update()
+            }
         )
     }
 
@@ -80,12 +124,27 @@ export default class GameObject {
             this.drawChildren()
         }
         else {
-            if (this.visible){
-                if(this.drawRectangle){
-                    this.renderer.drawRect(this.getRectangle(), false, Colors.DEFAULT)
-                }      
-            }
+            this.drawComponents()
         }
+    }
+
+    drawComponents(){
+
+        if(this.components.size()){
+            this.components.forEach(
+                component => {
+                    if(component.active && component.hasDraw){
+                        try{
+                            component.draw()
+                        }catch(e){
+                            console.log('Error: ' + e.message)
+                            throw new Error(`Component ${component._id} doens't have a draw method!`)
+                        } 
+                    }   
+                }
+            )
+        }
+
     }
 
     drawChildren() {
