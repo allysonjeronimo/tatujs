@@ -18,6 +18,7 @@ export default class GameObject {
         this.name = this.constructor.name
 
         this.children = new Collection()
+
         this.components = new Collection()
 
         this.renderer = new Renderer()
